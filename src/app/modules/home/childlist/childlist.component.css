@@ -1,0 +1,84 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    padding: 2rem 0;
+    padding-top: 0%;
+    /* background-color: #f8f9fa; */
+    /* min-height: 90vh; */
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+p{
+    margin-left: 250px;
+    font-size: 1.2rem;
+}
+.button-container {
+    display: flex;
+    gap: 1rem;
+    margin-left: 50px;
+    margin-bottom: 1rem;
+    justify-content: left;
+}
+
+button.btn {
+    padding:  0.1rem 0.3rem;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    background-color: #0056b3;
+    color: #fff;
+    width: 150px; /* Set a fixed width if needed */
+   
+}
+
+button.btn:hover {
+    background-color: #35a6e0;
+    color: #fff;
+}
+
+button.btn-primary {
+    background-color: #3ABEF9;
+    border-color: #3ABEF9;
+    color: #fff;
+}
+
+.content-container {
+    margin-top: -50px;
+    
+}
+.dropdown-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 2rem; /* Add margin below the dropdown container to create space between it and the button group */
+    margin-left: 200px;
+    
+}
+
+.dropdown {
+    width: 200px; /* Adjust width as needed */
+    padding: 0.5rem; /* Padding inside the dropdown for better spacing */
+    border: 1px solid #ccc; /* Border to define the dropdown's edges */
+    border-radius: 4px; /* Rounded corners for a softer look */
+    font-size: 1rem; /* Font size for the options */
+    background-color: #fff; /* Background color for the dropdown */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for a subtle 3D effect */
+}
+
+.dropdown option {
+    padding: 0.5rem; /* Padding inside the options */
+}
+.button-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem; /* Margin below button group if needed */
+    justify-content: left;
+}

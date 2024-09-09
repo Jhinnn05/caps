@@ -1,0 +1,21 @@
+<main>
+    <div class="container">
+        <p>CHILD LIST</p>
+        <div class="dropdown-container">
+            <select class="dropdown">
+                <option>Jhonnel</option>
+                <option>Keziah</option>
+                <option>Jabel</option>
+            </select>
+        </div>
+        <div class="button-container">
+            <button type="button" class="btn" routerLink="/main/home/home/childlist/childmain/finance">Financial Statement</button>
+            <button type="button" class="btn dropdown-btn" routerLink="/main/home/home/childlist/acadsmain/acadsrecord">Academic Record</button>
+            <button type="button" class="btn" routerLink="/main/home/home/childlist/childmain/attendance">Attendances</button>
+        </div>
+        <hr>
+        <div class="content-container">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</main>
