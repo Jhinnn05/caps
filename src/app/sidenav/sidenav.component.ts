@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, Input, signal } from '@angular/core';
+import { Component, computed, Input, OnInit, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { HttpClient } from '@angular/common/http';
 
 
 export type MenuItem = {
@@ -19,7 +21,25 @@ export type MenuItem = {
   styleUrl: './sidenav.component.css'
 })
 
-export class SidenavComponent {
+export class SidenavComponent implements OnInit{
+
+  AccDetails:any;
+  Accid:any;
+
+  constructor(private authService: AuthService, private router: Router, private http:HttpClient) {}
+
+  ngOnInit(): void {
+    this.Accid = localStorage.getItem('id');
+    this,this.authService.getProfile(this.Accid).subscribe((response:any)=>{
+      console.log(response);
+      this.AccDetails = response;
+      console.log('profile',this.AccDetails);
+    },
+    (error) =>{
+      console.error("Error Fetching Account Details",error);
+    }
+    );
+  }
   sideNavCollapsed = signal(false);
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val)
@@ -40,11 +60,6 @@ export class SidenavComponent {
       icon: 'account_circle',
       label: 'My Account',
       route: 'account'
-    },
-    {
-      icon: 'logout',
-      label: 'Logout',
-      route: '-'
     }
   ])
 

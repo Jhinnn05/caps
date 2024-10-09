@@ -1,25 +1,28 @@
+.container {
+    width: 300%;
+    padding: 20px;
+}
+
+h2 {
+    text-align: center; /* Center the title */
+}
+
 table {
     width: 100%;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    text-align: left;
+    border-collapse: collapse; /* Remove extra spacing between cells */
 }
 
 th, td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: center; /* Center-align all text */
+    border: 1px solid #ddd; /* Add border for clarity */
 }
 
 th {
-    background-color: #f4f4f4;
+    background-color: #f2f2f2; /* Header background color */
+}
+
+td strong {
     font-weight: bold;
-}
-
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
+    font-size: 1.1em; /* Emphasize the average grade */
 }

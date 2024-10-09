@@ -1,1 +1,57 @@
-<p>attendance works!</p>
+<div class="attendance-container">
+  <h3>Student Attendance Record</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Months</th>
+        <th *ngFor="let month of months">
+          <button class="no-border-button" (click)="onMonthClick(month)" [attr.aria-label]="'View ' + month.viewValue + ' attendance'">
+            {{ month.viewValue }}
+          </button>
+        </th>
+        <th>TOTAL</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Days of School</td>
+        <td *ngFor="let month of months">{{ getDaysOfSchool(month.value) }}</td>
+        <td>{{ getTotalDaysOfSchool() }}</td>
+      </tr>
+      <tr>
+        <td>Days Present</td>
+        <td *ngFor="let month of months">{{ getDaysPresent(month.value) }}</td>
+        <td>{{ getTotalDaysPresent() }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="container">
+  <blockquote class="blockquote mb-4 d-flex gap-3" style="border-bottom: 2px solid; border-bottom-color: black;">
+  </blockquote>
+
+  <div class="row">
+    <div class="col-md-12">
+      <mat-card class="attendance-card">
+        <mat-card-header class="d-flex"></mat-card-header>
+        <mat-card-content>
+          <div class="calendar">
+            <div class="calendar-header">
+              <div *ngFor="let day of days" class="calendar-day">{{ day }}</div>
+            </div>
+            <div class="calendar-body">
+              <div *ngFor="let date of getCalendarDates()" class="calendar-cell">
+                <div class="date">{{ date | date: 'd' }}</div>
+                <div class="status" [ngClass]="getStatusClass(date)">
+                  {{ getStatus(date) }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

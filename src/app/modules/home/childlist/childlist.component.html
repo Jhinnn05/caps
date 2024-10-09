@@ -1,21 +1,175 @@
-<main>
-    <div class="container">
-        <p>CHILD LIST</p>
-        <div class="dropdown-container">
-            <select class="dropdown">
-                <option>Jhonnel</option>
-                <option>Keziah</option>
-                <option>Jabel</option>
-            </select>
+<!-- 
+<div class="container mt-2">
+  
+    <div class="row card-row">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                  <div class="text-section">
+                   
+                    <a class="link-primary link-offset-2 link-offset-1-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover h4" routerLink="['/main/classes/classespage/viewsubject']">
+                        Jhonnel Manaois
+                    </a>
+                    <p class="h6 ms-1 m-1">Year Level: <small class="text-body-secondary">12</small> </p> 
+                    <p class="h6 ms-1 m-1">Section: <small class="text-body-secondary">A</small> </p> 
+                    <p class="h6 ms-1 m-1">School Year: <small class="text-body-secondary">2024-2025</small> </p> 
+                </div>
+
+                </div>
+            </div>
         </div>
-        <div class="button-container">
-            <button type="button" class="btn" routerLink="/main/home/home/childlist/childmain/finance">Financial Statement</button>
-            <button type="button" class="btn dropdown-btn" routerLink="/main/home/home/childlist/acadsmain/acadsrecord">Academic Record</button>
-            <button type="button" class="btn" routerLink="/main/home/home/childlist/childmain/attendance">Attendances</button>
-        </div>
-        <hr>
-        <div class="content-container">
-            <router-outlet></router-outlet>
+        <div class="col-md-9">
+            <div class="card">
+                <div class="card-body">
+                  <div class="nav-section">
+                    <nav>
+                      <ul class="navbar nav"> 
+                         
+                          <li><a class="navlink" 
+                            [routerLink]="['/main/home/home/childlist/childmain/finance']"
+                            routerLinkActive="active-link">
+                            <i class="fa-solid fa-list-check me-2"></i>Financial Statement</a>
+                          </li>
+                          <li><a class="navlink" 
+                            [routerLink]="['/main/home/home/childlist/acadsmain']"
+                            routerLinkActive="active-link">
+                            <i class="fa-solid fa-award me-2"></i>Grades</a>
+                          </li>
+                          <li><a class="navlink" 
+                            [routerLink]="['/main/home/home/childlist/attendancemain/attendance']"
+                            routerLinkActive="active-link">
+                            <i class="fa-solid fa-bars-progress me-2"></i>Attendance Report</a>
+                          </li>
+                      </ul>
+                    </nav>
+                  </div>
+
+                </div>
+            </div>
         </div>
     </div>
-</main>
+    
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-body">
+                  <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+
+
+
+<!-- <div class="container-fluid h-100  ">
+  <div class="row h-100">
+    <div class="col-9 col-md-3 p-0 sidebar">
+      <div class="container mb-3 mt-3">
+      <h3>CHILD LIST</h3>
+      </div>
+
+      <div *ngFor="let child of children" class="user-list-item" (click)="selectChild(child)">
+        <span>{{ child.name }}</span>
+      </div>
+    </div>
+
+    <div class="col-12 col-md-9 p-0 main-content" *ngIf="selectedChild">
+      <div class="child-info">
+        <h4>{{ selectedChild.name }}</h4>
+        <p>Year Level: {{ selectedChild.yearLevel }}</p>
+        <p>Section: {{ selectedChild.section }}</p>
+        <p>School Year: {{ selectedChild.schoolYear }}</p>
+      </div>
+
+      <div class="nav-section">
+        <nav>
+          <ul class="navbar nav">
+            <li><a class="navlink" 
+              [routerLink]="['/main/home/home/childlist/childmain/finance']"
+              routerLinkActive="active-link">
+              <i class="fa-solid fa-list-check me-2"></i>Financial Statement</a>
+            </li>
+            <li><a class="navlink" 
+              [routerLink]="['/main/home/home/childlist/acadsmain']"
+              routerLinkActive="active-link">
+              <i class="fa-solid fa-award me-2"></i>Grades</a>
+            </li>
+            <li><a class="navlink" 
+              [routerLink]="['/main/home/home/childlist/attendancemain/attendance']"
+              routerLinkActive="active-link">
+              <i class="fa-solid fa-bars-progress me-2"></i>Attendance Report</a>
+            </li> 
+          </ul>
+        </nav>
+      </div>
+
+      <div class="content-section">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+
+
+
+
+<div class="container-fluid h-100">
+    <div class=" row h-100 messenger-container">
+         <div class="col-12 col-md-3 col-lg-2 p-0 sidebar container">
+             <div class="container mb-2 d-flex justify-content-between align-items-center">
+                 <p class="h4 m-0">CHILD LIST</p>
+             </div>
+             <div class="container mb-3 mt-3">
+                 <div class="input-group">
+                     <input type="text" class="form-control" placeholder="Search Child" aria-label="Search Child" style="border-radius: 20px;">
+                 </div>
+             </div>
+             <div *ngFor="let child of children" class="user-list-item" (click)="selectChild(child)">
+                 <img src="profile.jpg" alt="User" class="rounded-circle me-1" width="40" height="40">
+                 <span>{{ child.name }}</span>
+             </div>
+             
+         </div>
+ 
+         <div class="col-12 col-md-9 col-lg-10 p-0 main-content">
+             <div class="chat-header d-flex align-items-center">
+              <div class="child-info">
+                <h4>{{ selectedChild.name }}</h4>
+                <p>Year Level: {{ selectedChild.yearLevel }}</p>
+                <p>Section: {{ selectedChild.section }}</p>
+                <p>School Year: {{ selectedChild.schoolYear }}</p>
+              </div>
+             </div>
+ 
+             <div class="chat-area">
+              <nav>
+                <ul class="navbar nav">
+                  <li><a class="navlink" 
+                    [routerLink]="['/main/home/home/childlist/childmain/finance']"
+                    routerLinkActive="active-link">
+                    <i class="fa-solid fa-list-check me-2"></i>Financial Statement</a>
+                  </li>
+                  <li><a class="navlink" 
+                    [routerLink]="['/main/home/home/childlist/acadsmain']"
+                    routerLinkActive="active-link">
+                    <i class="fa-solid fa-award me-2"></i>Grades</a>
+                  </li>
+                  <li><a class="navlink" 
+                    [routerLink]="['/main/home/home/childlist/attendancemain/attendance']"
+                    routerLinkActive="active-link">
+                    <i class="fa-solid fa-bars-progress me-2"></i>Attendance Report</a>
+                  </li> 
+                </ul>
+              </nav>
+              <div class="content-section">
+                <router-outlet></router-outlet>
+              </div>
+             </div>
+         </div>
+     </div>
+ </div>

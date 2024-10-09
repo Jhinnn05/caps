@@ -7,6 +7,7 @@ import { ChildmainComponent } from './childmain/childmain.component';
 import { AcadsrecordComponent } from './acadsrecord/acadsrecord.component';
 import { AttendanceComponent } from './attendance/attendance.component';
 import { AcadsmainComponent } from './acadsmain/acadsmain.component';
+import { AttendanceMainComponent } from './attendance-main/attendance-main.component';
 // import { announcementroutes } from '../announcement/announcement.route';
 
 
@@ -26,7 +27,13 @@ export const childlistroutes: Routes = [
         ]
     },
     
-    {path:'attendance',component:AttendanceComponent},
+    {path:'attendancemain',component:AttendanceMainComponent,
+        children:[
+            {path:'attendance',component:AttendanceComponent},
+            {path: '', redirectTo: 'attendance', pathMatch: 'full'},
+            ]
+    },
+    
     {path: '', redirectTo: 'childmain', pathMatch: 'full'}
 
 ];

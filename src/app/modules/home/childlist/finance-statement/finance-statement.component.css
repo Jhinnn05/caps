@@ -1,32 +1,53 @@
-table {
-    width: 600px;
-    border-collapse: collapse;
-    margin: 20px 0;
-    font-size: 1rem;
-    text-align: left;
+/* Container for the Statement of Account */
+.statement-container {
+    width: 300%; /* Adjust this based on how much space you want to fill */
+    margin: 0 auto; /* Centers the container */
+    padding: 20px; /* Adds some padding inside the border */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for aesthetics */
+}
+h2 {
+    text-align: center; /* Center-align the title */
+}
+/* Table inside the Statement of Account */
+.statement-table {
+    width: 100%;
+    border-collapse: collapse; /* Remove extra spacing between cells */
+
 }
 
-th, td {
-    padding: 16px; /* Increased padding for better spacing */
-    border-bottom: 1px solid #ddd;
+/* Styling for the table headers */
+.statement-table th,
+.statement-table td {
+    padding: 10px;
+    text-align: justify; /* Justify text alignment */
+    border: 1px solid #ddd; /* Add a border for clarity */
 }
 
-th {
-    background-color: #f4f4f4;
+/* Add some more spacing around the text */
+.statement-container h2 {
+    text-align: justify; /* Centers the heading text */
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+.statement-table th {
+    background-color: #f2f2f2; /* Background color for header */
+}
+
+.statement-table td {
+    text-align: right; /* Right-align amounts */
+}
+
+.statement-table td:first-child {
+    text-align: left; /* Left-align descriptions */
+}
+/* Make "ESC" bold and smaller */
+.statement-table tr:nth-child(5) td:first-child {
     font-weight: bold;
+    font-size: 0.9em; /* Slightly smaller font size */
 }
 
-tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-
-tr:hover {
-    background-color: #f1f1f1;
-}
-
-caption {
-    caption-side: top;
-    font-size: 1.5rem;
+/* Make "TOTAL BALANCE" bold */
+.statement-table tr:last-child td {
     font-weight: bold;
-    margin-bottom: 10px;
+    font-size: 1.1em; /* Slightly larger font size for emphasis */
 }

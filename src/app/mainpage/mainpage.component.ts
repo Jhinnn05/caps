@@ -5,11 +5,21 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { SidenavComponent } from '../sidenav/sidenav.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { CommonModule } from '@angular/common';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-mainpage',
   standalone: true,
-  imports: [RouterModule, MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, SidenavComponent],
+  imports: [RouterModule, MatSidenavModule, 
+    CommonModule, MatToolbarModule, 
+    MatButtonModule, MatIconModule, 
+    MatListModule, SidenavComponent,
+    MatExpansionModule, MatBadgeModule, MatMenuModule, MatTooltipModule],
   templateUrl: './mainpage.component.html',
   styleUrl: './mainpage.component.css'
 })
