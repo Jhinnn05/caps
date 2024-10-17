@@ -9,8 +9,6 @@ import { AttendanceComponent } from './attendance/attendance.component';
 import { AcadsmainComponent } from './acadsmain/acadsmain.component';
 import { AttendanceMainComponent } from './attendance-main/attendance-main.component';
 // import { announcementroutes } from '../announcement/announcement.route';
-
-
 export const childlistroutes: Routes = [
     {
     path:'childmain',component:ChildmainComponent,

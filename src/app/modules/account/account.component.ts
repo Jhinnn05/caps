@@ -22,7 +22,7 @@ export class AccountComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router, private http:HttpClient) {}
   
   ngOnInit(): void {
-    this.Accid = localStorage.getItem('id');
+    this.Accid = localStorage.getItem('email');
     this,this.authService.getProfile(this.Accid).subscribe((response:any)=>{
       console.log(response);
       this.AccDetails = response;
@@ -33,7 +33,7 @@ export class AccountComponent implements OnInit{
     }
     );
     this.changepasswordFrom = new FormGroup({
-      id: new FormControl(this.Accid),
+      email: new FormControl(this.Accid),
       oldPassword: new FormControl('', Validators.required),
       newPassword: new FormControl('', Validators.required),
       confirmPassword: new FormControl('', Validators.required),

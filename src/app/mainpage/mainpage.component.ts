@@ -11,6 +11,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBadgeModule } from '@angular/material/badge';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-mainpage',
@@ -24,8 +25,20 @@ import { MatBadgeModule } from '@angular/material/badge';
   styleUrl: './mainpage.component.css'
 })
 export class MainpageComponent {
-
   collapsed = signal(false)
-
   sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');  
+  constructor(private authService: AuthService) {}
+
+  onLogout() {
+    this.authService.logout().subscribe(
+      (response) => {
+        console.log(response.message); // Handle success
+        // Optionally redirect to login page
+        // this.router.navigate(['/login']);
+      },
+      (error) => {
+        console.error('Logout failed', error); // Handle error
+      }
+    );
+  }
 }

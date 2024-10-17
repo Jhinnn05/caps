@@ -29,7 +29,7 @@ export class SidenavComponent implements OnInit{
   constructor(private authService: AuthService, private router: Router, private http:HttpClient) {}
 
   ngOnInit(): void {
-    this.Accid = localStorage.getItem('id');
+    this.Accid = localStorage.getItem('email');
     this,this.authService.getProfile(this.Accid).subscribe((response:any)=>{
       console.log(response);
       this.AccDetails = response;
@@ -44,7 +44,6 @@ export class SidenavComponent implements OnInit{
   @Input() set collapsed(val: boolean) {
     this.sideNavCollapsed.set(val)
   }
-  
   menuItems = signal<MenuItem[]>([
     {
       icon: 'home',
@@ -62,6 +61,5 @@ export class SidenavComponent implements OnInit{
       route: 'account'
     }
   ])
-
   profilePicSize = computed (() => this.sideNavCollapsed() ? '32' : '100');
 }

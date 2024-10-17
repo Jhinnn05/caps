@@ -1,53 +1,69 @@
-/* Container for the Statement of Account */
-.statement-container {
-    width: 300%; /* Adjust this based on how much space you want to fill */
-    margin: 0 auto; /* Centers the container */
-    padding: 20px; /* Adds some padding inside the border */
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for aesthetics */
+.container {
+    width: 300%;
+    padding: 20px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+}
+.receipt-container {
+    background-color: #ffffff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 1000px; /* Increased width for landscape */
+    margin: auto;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: block;
 }
 h2 {
-    text-align: center; /* Center-align the title */
+    text-align: center;
+    color: #333;
+    margin-bottom: 10px;
 }
-/* Table inside the Statement of Account */
-.statement-table {
-    width: 100%;
-    border-collapse: collapse; /* Remove extra spacing between cells */
-
-}
-
-/* Styling for the table headers */
-.statement-table th,
-.statement-table td {
-    padding: 10px;
-    text-align: justify; /* Justify text alignment */
-    border: 1px solid #ddd; /* Add a border for clarity */
-}
-
-/* Add some more spacing around the text */
-.statement-container h2 {
-    text-align: justify; /* Centers the heading text */
-    margin-bottom: 20px;
-    font-size: 1.5em;
-}
-.statement-table th {
-    background-color: #f2f2f2; /* Background color for header */
-}
-
-.statement-table td {
-    text-align: right; /* Right-align amounts */
-}
-
-.statement-table td:first-child {
-    text-align: left; /* Left-align descriptions */
-}
-/* Make "ESC" bold and smaller */
-.statement-table tr:nth-child(5) td:first-child {
+.total {
     font-weight: bold;
-    font-size: 0.9em; /* Slightly smaller font size */
+    margin-top: 15px;
+    color: #d9534f; 
+}
+.footer {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 12px;
+    color: #777;
 }
 
-/* Make "TOTAL BALANCE" bold */
-.statement-table tr:last-child td {
-    font-weight: bold;
-    font-size: 1.1em; /* Slightly larger font size for emphasis */
+.button-container {
+    text-align: center; /* Center the buttons */
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+@media print {
+    @page {
+        size: landscape; /* Set landscape for printing */
+        margin: 20mm; /* Set margin for print */
+    }
+    body {
+        background-color: #fff;
+    }
+    .receipt-container {
+        box-shadow: none;
+        max-width: 100%; /* Take full width for printing */
+    }
 }

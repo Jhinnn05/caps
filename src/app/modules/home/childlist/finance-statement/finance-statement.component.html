@@ -1,38 +1,61 @@
-<div class="statement-container">
-    <h2>Statement of Account (SOA) for Student</h2>
-    <blockquote class="blockquote mb-4 d-flex gap-3" style="border-bottom: 2px solid; border-bottom-color: black;"></blockquote>
-    <table class="statement-table">
+<div class="container">
+
+
+    <p><strong>Statement of Account as of:</strong> {{currentDate}}</p>
+    <p><strong>Account Name:</strong> {{name}}</p>
+
+<div class="transaction-table">
+    <table style="width:100%; border-collapse: collapse; margin-top: 20px;">
         <thead>
-            <tr>
-                <th>Description</th>
-                <th>Amount (PHP)</th>
+            <tr style="background-color: #333; color: white;"> 
+                <th style="padding: 8px; border: 1px solid #ccc; text-align: left;">DATE</th>
+                <th style="padding: 8px; border: 1px solid #ccc; text-align: left;">JRNL#</th>
+                <th style="padding: 8px; border: 1px solid #ccc; text-align: left;">DESCRIPTION</th>
+                <th style="padding: 8px; border: 1px solid #ccc; text-align: right;">CHARGES/DR</th>
+                <th style="padding: 8px; border: 1px solid #ccc; text-align: right;">PAYMENTS/CR</th>
+                <th style="padding: 8px; border: 1px solid #ccc; text-align: right;">BALANCE</th>
             </tr>
         </thead>
         <tbody>
+            <!-- 1st Semester -->
             <tr>
-                <td>Old Account</td>
-                <td>0.00</td>
+                <td colspan="6" style="padding: 8px; border: 1px solid #ccc; text-align: center; font-weight: bold;">******BEGINNING BALANCE - 003/2024</td>
             </tr>
             <tr>
-                <td>Tuition Fee</td>
-                <td>16,143.55</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">2024-01-09</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">OR-00000</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">Tuition & fee SY 2024-2025</td>
+                <td style="padding: 8px; border: 1px solid #ccc; text-align: right;">{{tuition}}</td>
+                <td style="padding: 8px; border: 1px solid #ccc; text-align: right;"></td>
+                <td style="padding: 8px; border: 1px solid #ccc; text-align: right;">00.0</td>
             </tr>
+            @for(s of students; track s.LRN){
             <tr>
-                <td>General and Miscalaneous Fees</td>
-                <td>7,970</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">{{s.date_of_payment}}</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">{{s.OR_number}}</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">{{s.description}}</td>
+                <td style="padding: 8px; border: 1px solid #ccc; text-align: right;"></td>
+                <td style="padding: 8px; border: 1px solid #ccc; text-align: right;">{{s.amount_paid | currency: 'PHP':'symbol'}}</td>
+                <td style="padding: 8px; border: 1px solid #ccc; text-align: right;">{{ s.remaining_balance | currency: 'PHP':'symbol' }}</td>
             </tr>
-            <tr>
-                <td>Total Tuition fees (+old Account)</td>
-                <td>24,114.41</td>
-            </tr>
-            <tr>
-                <td>Less ESC</td>
-                <td>9,000</td>
-            </tr>
-            <tr>
-                <td>TOTAL BALANCE</td>
-                <td>15,114.41</td>
-            </tr>
+            }
+            
         </tbody>
     </table>
+</div>
+
+<!-- Net Balance Section -->
+<div style="margin-top: 20px;">
+    <!-- @for(s of students; track s.LRN){ -->
+    <p style="font-weight: bold; text-align: center;">******NET BALANCE - Due NLAC: {{remaining_balance | currency: 'PHP':'symbol'}} Dr</p>
+    <!-- } -->
+</div>
+
+<!-- Inquiries Section -->
+<div style="margin-top: 20px; text-align: left;">
+    <p><strong>For inquiries please see the Business Office.</strong></p>
+    <p><strong>Office of the Accountant</strong></p>
+    <p><strong>Tel: 075-524-7568</strong></p>
+    <p><strong>Email: nlacbusinessoffice&#64;yahoo.com</strong></p>
+</div>
 </div>
