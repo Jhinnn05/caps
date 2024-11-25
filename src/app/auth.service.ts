@@ -1,26 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable,BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api'; //Laravel backend URL
-  token =localStorage.getItem('token');
   id = localStorage.getItem('id');
+  private adminPicSubject = new BehaviorSubject<string | null>(null); // This will store the admin image URL
+  adminPic$ = this.adminPicSubject.asObservable();
   constructor(private http: HttpClient) {}
+  
 
   login(data: any): Observable<any> {
     return this.http.post(this.apiUrl + '/login', data);
   }
-  getProfile(id:any): Observable<any>{
-    const headers = {'Authorization': 'Bearer'+ this.token};  
-    return this.http.get(`${this.apiUrl}/Account/${id}`,{headers});
-  }
   updatePass(email:any){
-    // const headers = {'Authorization': 'Bearer'+ this.token};  
-    // return this.http.post(this.apiUrl + '/updatePass/',email,{headers});
+
     return this.http.get<any[]>(`${this.apiUrl}/updatePass?email=${email}`);
   }
   getparent(email: string): Observable<any[]> {
@@ -33,7 +30,26 @@ export class AuthService {
     return this.http.get<any>(`${this.apiUrl}/displaygrades/${cid}`);
   }
   logout(): Observable<any> {
-    return this.http.post(`${this.apiUrl}/logout`, {});
+    const token = localStorage.getItem('token'); // Retrieve the token dynamically
+    const headers = { Authorization: `Bearer ${token}` }; // Correctly format the headers
+    console.log('token:', token);
+    return this.http.post(`${this.apiUrl}/logout`, {}, { headers }); // Pass headers in the request
+  }
+  getAttendance(lcn: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/attendances/${lcn}`);
+  }
+  update(email: string, OldPassword: string, newData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/update-password`, {
+      email: email,
+      oldPassword: OldPassword,
+      ...newData
+    });
+  }
+  uploadImage(formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/upload-image`, formData);
+  }
+  updateParentPic(newImageUrl: string) {
+    this.adminPicSubject.next(newImageUrl); // Emit new image URL
   }
 //   getparent(email: any): Observable<any[]> {
 //     const headers = {'Authorization': 'Bearer'+ this.token};

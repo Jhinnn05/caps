@@ -60,7 +60,6 @@ export class ChildlistComponent implements OnInit {
 
   selectStudent(student: any) {
       this.selectedStudent = student; // Set the selected student
-
       // Set the student's LRN in local storage
       if (student && student.LRN) {
           localStorage.setItem('LRN', student.LRN);

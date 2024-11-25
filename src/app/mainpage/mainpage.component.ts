@@ -31,14 +31,14 @@ export class MainpageComponent {
 
   onLogout() {
     this.authService.logout().subscribe(
-      (response) => {
-        console.log(response.message); // Handle success
-        // Optionally redirect to login page
-        // this.router.navigate(['/login']);
-      },
-      (error) => {
-        console.error('Logout failed', error); // Handle error
-      }
+        (response) => {
+            console.log(response.message); // Handle success
+            localStorage.removeItem('token'); // Clear token from local storage
+            // this.router.navigate(['/login']); // Redirect to login page
+        },
+        (error) => {
+            console.error('Logout failed', error); // Handle error
+        }
     );
-  }
+}
 }

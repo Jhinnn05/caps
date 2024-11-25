@@ -15,39 +15,6 @@
     flex: 1; /* Equal width for subject and month selectors */
   }
   
-  .calendar {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .calendar-header {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-  }
-  
-  .calendar-day {
-    flex: 1;
-    text-align: center;
-    padding: 5px;
-  }
-  
-  .calendar-body {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .calendar-cell {
-    flex: 1 0 14.28%; /* 7 days in a week */
-    border: 1px solid #e0e0e0; /* Light border */
-    padding: 10px;
-    text-align: center;
-    position: relative;
-  }
-  
-  .date {
-    font-weight: bold;
-  }
   
   .status {
     margin-top: 5px;
@@ -102,3 +69,104 @@ thead th {
   text-decoration: underline; /* Optional: underline on hover for better indication */
 }
 
+.calendar {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+}
+
+.calendar-day {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+}
+
+.calendar-body {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 columns for weekdays */
+  gap: 10px; /* Space between cells */
+}
+
+.calendar-cell {
+  border: 1px solid #e0e0e0; /* Light border */
+  padding: 10px;
+  text-align: center;
+  position: relative;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+.date {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.status-container {  
+  display: flex;  
+  justify-content: space-around;  
+  align-items: center; /* Optional: helps vertically align the text */  
+}  
+
+.no-record-container {  
+  display: flex;  
+  align-items: center; /* Centers text vertically with the color box */  
+  background-color: gray;  
+  color: black;  
+  width: 20px; /* Add width for visibility */  
+  height: 20px; /* Add height for visibility */
+  border-radius: 50%;  
+}  
+
+.late-container {  
+  display: flex;  
+  align-items: center; /* Centers text vertically with the color box */   
+  background-color: yellow;  
+  color: black;  
+  width: 20px; /* Add width for visibility */  
+  height: 20px; /* Add height for visibility */
+  border-radius: 50%;  
+}  
+
+.absent-container {  
+  display: flex;  
+  align-items: center; /* Centers text vertically with the color box */  
+  background-color: red;  
+  color: black;  
+  width: 20px; /* Add width for visibility */  
+  height: 20px; /* Add height for visibility */ 
+  border-radius: 50%; 
+}  
+
+.present-container {  
+  display: flex;  
+  align-items: center; /* Centers text vertically with the color box */  
+  background-color: green;  
+  color: black;  
+  width: 20px; /* Add width for visibility */  
+  height: 20px; /* Add height for visibility */  
+  border-radius: 50%;
+} 
+
+.present {
+  background-color: green;
+  color: black;
+}
+
+.absent {
+  background-color: red;
+  color: black;
+}
+
+.late {
+  background-color: yellow;
+  color: black;
+}
+
+.no-record {
+  background-color: gray;
+  color: black;
+}

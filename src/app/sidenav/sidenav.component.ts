@@ -23,22 +23,13 @@ export type MenuItem = {
 
 export class SidenavComponent implements OnInit{
 
-  AccDetails:any;
-  Accid:any;
+  AccountDetails:any;
+  Accountid:any;
 
-  constructor(private authService: AuthService, private router: Router, private http:HttpClient) {}
+  // constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.Accid = localStorage.getItem('email');
-    this,this.authService.getProfile(this.Accid).subscribe((response:any)=>{
-      console.log(response);
-      this.AccDetails = response;
-      console.log('profile',this.AccDetails);
-    },
-    (error) =>{
-      console.error("Error Fetching Account Details",error);
-    }
-    );
+    
   }
   sideNavCollapsed = signal(false);
   @Input() set collapsed(val: boolean) {

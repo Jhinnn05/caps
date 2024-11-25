@@ -1,73 +1,65 @@
-<div class="container-fluid h-100" *ngFor="let parent of parents">  
-    <div class="row h-100 messenger-container">  
-      <div class="col-12 col-md-3 col-lg-2 p-0 sidebar container">
-        <div>
-          <h4>Children</h4>
-          <div class="student-item" *ngFor="let student of parent.students" (click)="selectStudent(student)" style="cursor: pointer;">  
-            <img src="profile.jpg" alt="User" class="rounded-circle me-1" width="40" height="40">  
-            <span class="student-name">{{ student.fname }} {{ student.lname }} {{ student.mname ? student.mname : '' }}</span>  
-          </div>
-          <div class="announcement-section mt-2 p-3 shadow-sm">
-            <div class="d-flex justify-content-between align-items-start">
-              <!-- Title of the announcement -->
-              <h5 class="announcement-title mb-2">New School Policy Update</h5>
-              <!-- Date of the announcement -->
-              <span class="announcement-date">October 15, 2024</span>
-            </div>
-            <p class="announcement-text mb-1">New school policy starts next week, please be prepared.</p>
-            <p class="announcement-text mb-1">Parent-teacher conference is scheduled for Friday at 3 PM.</p>
-            <p class="announcement-text">School holidays are from October 20th to 25th.</p>
-          </div>
-          
-          <div class="announcement-section mt-2 p-3 shadow-sm">
-            <div class="d-flex justify-content-between align-items-start">
-              <!-- Title of the second announcement -->
-              <h5 class="announcement-title mb-2">Parent-Teacher Conference</h5>
-              <!-- Date of the second announcement -->
-              <span class="announcement-date">October 10, 2024</span>
-            </div>
-            <p class="announcement-text mb-1">The parent-teacher conference is scheduled for Friday, October 17, at 3 PM.</p>
-            <p class="announcement-text">Please make sure to RSVP and be on time.</p>
-          </div>          
-        </div>  
-      </div>  
-  
-      <div class="col-12 col-md-9 col-lg-10 p-0 main-content">  
-        <div class="chat-header d-flex align-items-center">  
-          <div class="child-info">
-            <p>LRN: {{ selectedStudent.LRN || 'N/A' }}</p>
-            <p>Section/strand: {{ selectedStudent.section?.section_name }} {{ selectedStudent.section?.strand }}</p>    
-            <p>Grade Level: {{ selectedStudent.section?.grade_level || 'N/A' }}</p>
-          </div>  
-        </div>  
-        <nav class="navbar-container">  
-          <ul class="navbar nav">  
-            <li>  
-              <a class="navlink"   
-                 [routerLink]="['/main/home/home/childlist/childmain/finance']"  
-                 routerLinkActive="active-link">  
-                <i class="fa-solid fa-list-check me-2"></i>Financial Statement  
-              </a>  
-            </li>  
-            <li>  
-              <a class="navlink"   
-                 [routerLink]="['/main/home/home/childlist/acadsmain']"  
-                 routerLinkActive="active-link">  
-                <i class="fa-solid fa-award me-2"></i>Grades  
-              </a>  
-            </li>  
-            <li>  
-              <a class="navlink"   
-                 [routerLink]="['/main/home/home/childlist/attendancemain/attendance']"  
-                 routerLinkActive="active-link">  
-                <i class="fa-solid fa-bars-progress me-2"></i>Attendance Report  
-              </a>  
-            </li>  
-          </ul>  
-        </nav>  
-        <div class="content-section">  
-          <router-outlet></router-outlet>  
-        </div>  
-      </div>  
-    </div>   
+<div class="container-fluid h-100" *ngFor="let parent of parents">
+  <div class="row h-100 messenger-container flex-column flex-md-row">
+    <div class="col-12 col-md-3 col-lg-2 p-0 sidebar container">
+      <!-- Sidebar content -->
+      <h4>Children</h4>
+      <div class="student-item" *ngFor="let student of parent.students" (click)="selectStudent(student)" style="cursor: pointer;">
+        <img src="profile.jpg" alt="User" class="rounded-circle me-1" width="40" height="40">
+        <span class="student-name">{{ student.fname }} {{ student.lname }} {{ student.mname ? student.mname : '' }}</span>
+      </div>
+      <!-- Announcements section -->
+      <div class="announcement-section mt-2 p-3 shadow-sm">
+        <div class="d-flex justify-content-between align-items-start">
+          <h5 class="announcement-title mb-2">New School Policy Update</h5>
+          <span class="announcement-date">October 15, 2024</span>
+        </div>
+        <p class="announcement-text mb-1">New school policy starts next week, please be prepared.</p>
+        <p class="announcement-text mb-1">Parent-teacher conference is scheduled for Friday at 3 PM.</p>
+        <p class="announcement-text">School holidays are from October 20th to 25th.</p>
+      </div>
+      <!-- Additional announcements -->
+      <div class="announcement-section mt-2 p-3 shadow-sm">
+        <div class="d-flex justify-content-between align-items-start">
+          <h5 class="announcement-title mb-2">Parent-Teacher Conference</h5>
+          <span class="announcement-date">October 10, 2024</span>
+        </div>
+        <p class="announcement-text mb-1">The parent-teacher conference is scheduled for Friday, October 17, at 3 PM.</p>
+        <p class="announcement-text">Please make sure to RSVP and be on time.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-9 col-lg-10 p-0 main-content">
+      <!-- Main content -->
+      <div class="chat-header d-flex align-items-center">
+        <div class="child-info">
+          <p>LRN: {{ selectedStudent.LRN || 'N/A' }}</p>
+          <p>Section/strand: {{ selectedStudent.section?.section_name }} {{ selectedStudent.section?.strand }}</p>
+          <p>Grade Level: {{ selectedStudent.section?.grade_level || 'N/A' }}</p>
+        </div>
+      </div>
+      <!-- Navbar for tabs -->
+      <nav class="navbar-container">
+        <ul class="navbar nav">
+          <li class="navbar-list">
+            <a class="navlink" [routerLink]="['/main/home/home/childlist/childmain/finance']" routerLinkActive="active-link">
+              <i class="bi bi-wallet-fill"></i>Financial Statement
+            </a>
+          </li>
+          <li class="navbar-list">
+            <a class="navlink" [routerLink]="['/main/home/home/childlist/acadsmain']" routerLinkActive="active-link">
+              <i class="bi bi-award"></i>Grades
+            </a>
+          </li>
+          <li class="navbar-list">
+            <a class="navlink" [routerLink]="['/main/home/home/childlist/attendancemain/attendance']" routerLinkActive="active-link">
+              <i class="bi bi-activity"></i>Attendance Report
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- Content for each section based on the selected tab -->
+      <div class="content-section">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
+</div>
