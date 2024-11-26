@@ -51,20 +51,18 @@ export class AuthService {
   updateParentPic(newImageUrl: string) {
     this.adminPicSubject.next(newImageUrl); // Emit new image URL
   }
-//   getparent(email: any): Observable<any[]> {
-//     const headers = {'Authorization': 'Bearer'+ this.token};
-//     return this.http.get<any[]>(`${this.apiUrl}/parentguardians/${email}`);
-// }
 
-  // signup(userData: {name: string, email: string, password: string}): Observable<any> {
-  //   return this.http.post(`${this.apiUrl}/register`, userData);
-  // }
-
-  // logout(): void {
-  //   localStorage.removeItem('token');
-  // }
-
-  // isAuthenticated(): boolean {
-  //   return !!localStorage.getItem('token');
-  // }
+  //messages
+  getMessages(uid: any){
+    return this.http.get(this.apiUrl + '/getMessages', {params: {uid: uid}});
+  }
+  getConvo(sid: any, uid: any){
+    return this.http.get(this.apiUrl + '/getConvo/' + sid , {params: {uid: uid}});
+  }
+  getAdmins(){
+    return this.http.get(this.apiUrl + '/getAdmins');
+  }
+  sendMessage(mdata: any){
+    return this.http.post(this.apiUrl + '/sendMessage', mdata );
+  }
 }

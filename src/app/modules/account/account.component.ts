@@ -48,6 +48,7 @@ export class AccountComponent implements OnInit{
         email: user.email,
         address: user.address,
         oldPassword: user.oldPassword,
+        
       });
     }
     this.Parent_pic = user.parent_pic || 'default-image-url';
@@ -82,7 +83,6 @@ export class AccountComponent implements OnInit{
             email: formData.email,
             address: formData.address,
           };
-  
           localStorage.setItem('user', JSON.stringify(updatedUser));
           this.loadUserData();
         },

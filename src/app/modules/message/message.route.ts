@@ -1,9 +1,20 @@
+
 import { Routes } from '@angular/router';
-import { MessageComponent } from './message.component';
-// import { Childlistcomponent } from './account.component';
-// import { ChildlistComponent } from './childlist.component';
+import { MessagepageComponent } from './messagepage/messagepage.component';
+import { SendComponent } from './send/send.component';
+import { ViewComponent } from './view/view.component';
+import { ViewMessageComponent } from './view-message/view-message.component';
 
 export const messageroutes: Routes = [
- {path:'message', component: MessageComponent},
-{path: '', redirectTo: 'message', pathMatch: 'full'}
+    {path: 'messagepage', component: MessagepageComponent,
+        children: [
+            {path: 'messages', component: SendComponent, 
+                children: [
+                    {path: 'view/:sid', component: ViewComponent},
+                ]
+            },
+            {path: '', redirectTo: 'messages', pathMatch: 'full'}
+        ]
+    },
+    {path: '', redirectTo:'messagepage', pathMatch: 'full'}
 ];

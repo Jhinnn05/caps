@@ -1,14 +1,8 @@
 .container {
   width: 300%; /* Adjust this based on how much space you want to fill */
   margin: 0 auto; /* Centers the container */
-  padding: 20px; /* Adds some padding inside the border */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional: Adds a shadow for aesthetics */
+  padding: 20px; /* Adds some padding inside the border */ /* Optional: Adds a shadow for aesthetics */
 }
-.attendance-card {
-    margin-top: 20px; /* Space above the card */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-  }
   
   .subject-selector,
   .month-selector {

@@ -1,13 +1,15 @@
 <div class="container-fluid h-100" *ngFor="let parent of parents">
   <div class="row h-100 messenger-container flex-column flex-md-row">
     <div class="col-12 col-md-3 col-lg-2 p-0 sidebar container">
-      <!-- Sidebar content -->
+      <!-- Children Section -->
       <h4>Children</h4>
       <div class="student-item" *ngFor="let student of parent.students" (click)="selectStudent(student)" style="cursor: pointer;">
-        <img src="profile.jpg" alt="User" class="rounded-circle me-1" width="40" height="40">
+        <img src="profile.jpg" alt="User " class="rounded-circle me-1" width="40" height="40">
         <span class="student-name">{{ student.fname }} {{ student.lname }} {{ student.mname ? student.mname : '' }}</span>
       </div>
-      <!-- Announcements section -->
+
+      <!-- Announcements Section -->
+      <h5 class="mt-2">Announcements</h5>
       <div class="announcement-section mt-2 p-3 shadow-sm">
         <div class="d-flex justify-content-between align-items-start">
           <h5 class="announcement-title mb-2">New School Policy Update</h5>
@@ -17,7 +19,6 @@
         <p class="announcement-text mb-1">Parent-teacher conference is scheduled for Friday at 3 PM.</p>
         <p class="announcement-text">School holidays are from October 20th to 25th.</p>
       </div>
-      <!-- Additional announcements -->
       <div class="announcement-section mt-2 p-3 shadow-sm">
         <div class="d-flex justify-content-between align-items-start">
           <h5 class="announcement-title mb-2">Parent-Teacher Conference</h5>
@@ -27,15 +28,17 @@
         <p class="announcement-text">Please make sure to RSVP and be on time.</p>
       </div>
     </div>
+
     <div class="col-12 col-md-9 col-lg-10 p-0 main-content">
-      <!-- Main content -->
+      <!-- Child Details Section -->
       <div class="chat-header d-flex align-items-center">
         <div class="child-info">
           <p>LRN: {{ selectedStudent.LRN || 'N/A' }}</p>
-          <p>Section/strand: {{ selectedStudent.section?.section_name }} {{ selectedStudent.section?.strand }}</p>
+          <p>Section/Strand: {{ selectedStudent.section?.section_name }} {{ selectedStudent.section?.strand }}</p>
           <p>Grade Level: {{ selectedStudent.section?.grade_level || 'N/A' }}</p>
         </div>
       </div>
+
       <!-- Navbar for tabs -->
       <nav class="navbar-container">
         <ul class="navbar nav">
@@ -56,6 +59,7 @@
           </li>
         </ul>
       </nav>
+
       <!-- Content for each section based on the selected tab -->
       <div class="content-section">
         <router-outlet></router-outlet>
