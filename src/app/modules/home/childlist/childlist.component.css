@@ -19,22 +19,14 @@ body, html {
   flex: 1;
   display: flex;
   flex-direction: column;
-  height: 650px;
   background-color: white;
 }
 
-.chat-header, .chat-footer {
+.chat-header {
   padding: 10px;
   border-bottom: 1px solid #ddd;
   display: flex;
   align-items: center;
-}
-
-.navbar-list {
-  margin: 10px;
-  background-color: #43caff;
-  padding: 10px;
-  border-bottom: 1px solid #444444;
 }
 
 .navbar-container ul {
@@ -45,23 +37,16 @@ body, html {
   justify-content: space-between;
 }
 
-.navbar-container li {
-  margin-right: 20px;
+.navbar-list {
+  margin: 0 10px;
+  cursor: pointer;
 }
 
-.navbar-container a {
-  color: #000000;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.navbar-container a:hover {
-  color: #ccc;
-}
-
-.navbar-container a.active-link {
-  color: #020000;
-  border-bottom: 2px solid #fff;
+.navlink {
+  display: inline-block;
+  padding: 10px 15px;
+  color: #ffffff; /* Button text color */
+  background-color: #5f5f5f; /* Button background color */
 }
 
 /* Announcement Styling */
@@ -102,4 +87,50 @@ body, html {
   font-style: italic;
   margin-left: auto;
   align-self: flex-start;
+}
+.scrollable-container {
+  max-height: 500px; /* Set your desired height */
+  overflow-y: auto; /* Enable vertical scrolling */
+  overflow-x: hidden; /* Prevent horizontal scrolling */ /* Optional: Add a border for better visibility */
+  padding: 10px; /* Optional: Add padding */
+  border-radius: 5px; /* Optional: Rounded corners */
+}
+/* Hide scrollbar for WebKit browsers (Chrome, Safari, Opera) */
+.scrollable-container::-webkit-scrollbar {
+  display: none; /* Hides the scrollbar */
+}
+
+/* Hide scrollbar for Firefox */
+.scrollable-container {
+  scrollbar-width: none; /* Hides the scrollbar in Firefox */
+}
+.students-container {
+  margin-top: 10px; /* Optional: Add some space above the container */
+}
+
+.student-item {
+  padding: 10px; /* Add padding around each student item */
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
+  border-bottom: 1px solid #ccc; /* Add a line (divider) between items */
+}
+
+.student-item:last-child {
+  border-bottom: none; /* Remove the divider for the last item */
+}
+
+.student-name {
+  margin-left: 10px; /* Add space between the image and the name */
+}
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
 }

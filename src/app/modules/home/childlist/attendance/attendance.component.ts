@@ -9,7 +9,7 @@ import { AuthService } from '../../../../auth.service';
 
 interface AttendanceRecord {
   date: Date;
-  attendance_status: 'Present' | 'Absent' | 'Late' | 'Cut Class';
+  attendance_status: 'present' | 'absent' | 'late';
 }
 
 @Component({
@@ -122,13 +122,13 @@ getCalendarDates(): { date: Date, attendanceStatus: string }[] {
     // Filter attendanceRecords to count how many days are marked 'Present' for the selected month
     return this.attendanceRecords.filter(record => {
       const recordDate = new Date(record.date);
-      return recordDate.getMonth() === month.getMonth() && recordDate.getFullYear() === month.getFullYear() && record.attendance_status === 'Present';
+      return recordDate.getMonth() === month.getMonth() && recordDate.getFullYear() === month.getFullYear() && record.attendance_status === 'present';
     }).length;
   }
 
   getTotalDaysPresent(): number {
     // Calculate total days present from all attendance records
-    return this.attendanceRecords.filter(record => record.attendance_status === 'Present').length;
+    return this.attendanceRecords.filter(record => record.attendance_status === 'present').length;
   }
   /**
    * Method to calculate the total number of school days (Monday to Friday) across all selected months.
@@ -167,11 +167,11 @@ getCalendarDates(): { date: Date, attendanceStatus: string }[] {
 }
 getAttendanceClass(status: string): string {
   switch (status) {
-    case 'Present':
+    case 'present':
       return 'present';
-    case 'Absent':
+    case 'absent':
       return 'absent';
-    case 'Late':
+    case 'late':
       return 'late';
     default:
       return 'no-record'; // Default class for "No Record"

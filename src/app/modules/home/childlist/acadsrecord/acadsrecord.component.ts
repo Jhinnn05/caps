@@ -36,10 +36,10 @@ export class AcadsrecordComponent implements OnInit{
     }
   }
 
-  calculateAverage(quarter: number): number {
+  calculateAverage(quarter: string): number {
     const total = this.grades.reduce((sum, grade) => {
-      return sum + (grade[`grade_Q${quarter}`] || 0);
+        return sum + (grade[quarter] || 0);
     }, 0);
     return total / this.grades.length || 0; // Prevent division by zero
-  }
+}
 }

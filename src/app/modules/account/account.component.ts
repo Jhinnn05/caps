@@ -20,6 +20,8 @@ export class AccountComponent implements OnInit{
   changepasswordFrom:any;
   Parent_pic:any;
   user: any;
+
+  
   constructor(private authService: AuthService, private router: Router, private http:HttpClient) {}
   profileForm = new FormGroup({
     admin_id: new FormControl('',),
@@ -32,10 +34,12 @@ export class AccountComponent implements OnInit{
     newPassword: new FormControl(''),
     newPassword_confirmation: new FormControl(''),
     role: new FormControl(''),
-
   })
+  isLoadingEnrollments = true;
+  
   ngOnInit(): void {
     this.loadUserData();
+    this.isLoadingEnrollments = false;
   }
   loadUserData(): void {
     const user = JSON.parse(localStorage.getItem('user') || '{}');
@@ -117,8 +121,6 @@ export class AccountComponent implements OnInit{
             // Notify other components by updating the service
             this.authService.updateParentPic(newImageUrl); // Changed adminService to authService and adminPic to parentPic
             console.log('Parent Picture URL:', this.Parent_pic); // Changed adminPic to parentPic
-        }, error => {
-            console.error('Error uploading image:', error);
         });
     } else {
         console.error('No file selected or email is missing'); // Changed admin ID to email

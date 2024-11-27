@@ -9,26 +9,26 @@
                 <th>2nd Quarter</th>
                 <th>3rd Quarter</th>
                 <th>4th Quarter</th>
-                <th>Final Grade</th>
+                <!-- <th>Final Grade</th> -->
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let grade of grades">
                 <td>{{ grade.subject_name }}</td>
-                <td>{{ grade.grade_Q1 }}</td>
-                <td>{{ grade.grade_Q2 }}</td>
-                <td>{{ grade.grade_Q3 }}</td>
-                <td>{{ grade.grade_Q4 }}</td>
-                <td>{{ (grade.grade_Q1 + grade.grade_Q2 + grade.grade_Q3 + grade.grade_Q4) / 4 | number:'1.0-2' }}</td> <!-- Final Grade Calculation -->
+                <td>{{ grade.First_Quarter }}</td>
+                <td>{{ grade.Second_Quarter }}</td>
+                <td>{{ grade.Third_Quarter }}</td>
+                <td>{{ grade.Fourth_Quarter }}</td>
+                <!-- <td>{{ (grade.First_Quarter + grade.Second_Quarter + grade.Third_Quarter + grade.Fourth_Quarter) / 4 | number:'1.0-2' }}</td> -->
             </tr>
             <!-- Average Grade Row -->
             <tr>
-                <td><strong>Average Grade</strong></td>
-                <td><strong>{{ calculateAverage(1) | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ calculateAverage(2) | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ calculateAverage(3) | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ calculateAverage(4) | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ (calculateAverage(1) + calculateAverage(2) + calculateAverage(3) + calculateAverage(4)) / 4 | number:'1.0-2' }}</strong></td>
+                <!-- <td><strong>Average Grade</strong></td>
+                <td><strong>{{ calculateAverage('First_Quarter') | number:'1.0-2' }}</strong></td>
+                <td><strong>{{ calculateAverage('Second_Quarter') | number:'1.0-2' }}</strong></td>
+                <td><strong>{{ calculateAverage('Third_Quarter') | number:'1.0-2' }}</strong></td>
+                <td><strong>{{ calculateAverage('Fourth_Quarter') | number:'1.0-2' }}</strong></td>
+                <td><strong>{{ (calculateAverage('First_Quarter') + calculateAverage('Second_Quarter') + calculateAverage('Third_Quarter') + calculateAverage('Fourth_Quarter')) / 4 | number:'1.0-2' }}</strong></td> -->
             </tr>
         </tbody>
     </table>

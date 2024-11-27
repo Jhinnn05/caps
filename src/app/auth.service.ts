@@ -12,22 +12,18 @@ export class AuthService {
   adminPic$ = this.adminPicSubject.asObservable();
   constructor(private http: HttpClient) {}
   
+  //preloader
+  private _preloader: boolean = false;
+  get preloader(): boolean {
+    return this._preloader;
+  }
+
+  set preloader(value: boolean) {
+    this._preloader = value;
+  }
 
   login(data: any): Observable<any> {
     return this.http.post(this.apiUrl + '/login', data);
-  }
-  updatePass(email:any){
-
-    return this.http.get<any[]>(`${this.apiUrl}/updatePass?email=${email}`);
-  }
-  getparent(email: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/parentguardians?email=${email}`); 
-}
-  printSOA(id :any){
-    return this.http.get(`${this.apiUrl}/displaySOA/${id}`);
-  }
-  getGrades(cid: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/displaygrades/${cid}`);
   }
   logout(): Observable<any> {
     const token = localStorage.getItem('token'); // Retrieve the token dynamically
@@ -35,6 +31,21 @@ export class AuthService {
     console.log('token:', token);
     return this.http.post(`${this.apiUrl}/logout`, {}, { headers }); // Pass headers in the request
   }
+
+  updatePass(email:any){
+    return this.http.get<any[]>(`${this.apiUrl}/updatePass?email=${email}`);
+  }
+  
+  getparent(email: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/parentguardians?email=${email}`); 
+  }
+  printSOA(id :any){
+    return this.http.get(`${this.apiUrl}/displaySOA/${id}`);
+  }
+  getGrades(cid: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/displaygrades/${cid}`);
+  }
+  
   getAttendance(lcn: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/attendances/${lcn}`);
   }
@@ -64,5 +75,10 @@ export class AuthService {
   }
   sendMessage(mdata: any){
     return this.http.post(this.apiUrl + '/sendMessage', mdata );
+  }
+
+  //announcements
+  getannouncement(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + '/announcements'); 
   }
 }
