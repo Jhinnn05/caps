@@ -6,6 +6,8 @@ import { ActivatedRoute, Router, RouterModule, RouterOutlet } from '@angular/rou
 import { SearchFilterPipe } from '../../../search-filter.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthService } from '../../../auth.service';
+import { ReplyComponent } from '../reply/reply.component';
+
 
 @Component({
   selector: 'app-send',
@@ -28,6 +30,7 @@ export class SendComponent implements OnInit{
   uid: any;
   inputClicked: boolean = false;
   admins: any;
+  private intervalId: any; // To store the interval ID
 
   constructor(private auth: AuthService,
     private aroute: ActivatedRoute,
@@ -39,7 +42,34 @@ export class SendComponent implements OnInit{
     this.uid = localStorage.getItem('id');
     this.getMessages();
     this.getAdmins();
-}
+    this.startPolling(); // Start periodic updates
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReplyComponent, {
+      width:"500px",
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // this.messages.unshift(result);
+      this.getMessages();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.stopPolling(); // Clear the interval when the component is destroyed
+  }
+
+  startPolling(): void {
+    this.intervalId = setInterval(() => {
+      this.getMessages();
+    }, 10000); // Fetch messages every 10 seconds
+  }
+
+  stopPolling(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
 
 getMessages(){
     console.log(this.uid)

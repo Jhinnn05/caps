@@ -1,35 +1,53 @@
 <div class="container">
-    <h2>Grades</h2>
-    <blockquote class="blockquote mb-4 d-flex gap-3" style="border-bottom: 2px solid; border-bottom-color: black;"></blockquote>
-    <table>
-        <thead>
-            <tr>
-                <th>Subject</th>
-                <th>1st Quarter</th>
-                <th>2nd Quarter</th>
-                <th>3rd Quarter</th>
-                <th>4th Quarter</th>
-                <!-- <th>Final Grade</th> -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let grade of grades">
-                <td>{{ grade.subject_name }}</td>
-                <td>{{ grade.First_Quarter }}</td>
-                <td>{{ grade.Second_Quarter }}</td>
-                <td>{{ grade.Third_Quarter }}</td>
-                <td>{{ grade.Fourth_Quarter }}</td>
-                <!-- <td>{{ (grade.First_Quarter + grade.Second_Quarter + grade.Third_Quarter + grade.Fourth_Quarter) / 4 | number:'1.0-2' }}</td> -->
-            </tr>
-            <!-- Average Grade Row -->
-            <tr>
-                <!-- <td><strong>Average Grade</strong></td>
-                <td><strong>{{ calculateAverage('First_Quarter') | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ calculateAverage('Second_Quarter') | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ calculateAverage('Third_Quarter') | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ calculateAverage('Fourth_Quarter') | number:'1.0-2' }}</strong></td>
-                <td><strong>{{ (calculateAverage('First_Quarter') + calculateAverage('Second_Quarter') + calculateAverage('Third_Quarter') + calculateAverage('Fourth_Quarter')) / 4 | number:'1.0-2' }}</strong></td> -->
-            </tr>
-        </tbody>
+    <h2 class="text-center">Student Grades</h2>
+    <hr style="border: 2px solid black; margin-bottom: 20px;" />
+  
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th>Subject</th>
+          <ng-container *ngIf="grades[0]?.grade_level >= 7 && grades[0]?.grade_level <= 10">
+            <th>1st Quarter</th>
+            <th>2nd Quarter</th>
+            <th>3rd Quarter</th>
+            <th>4th Quarter</th>
+          </ng-container>
+          <ng-container *ngIf="grades[0]?.grade_level < 7 || grades[0]?.grade_level > 10">
+            <th>Midterm </th>
+            <th>Final </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let grade of grades">
+          <td>{{ grade.subject_name }}</td>
+          <ng-container *ngIf="grade.grade_level >= 7 && grade.grade_level <= 10">
+            <td>{{ grade.First_Quarter }}</td>
+            <td>{{ grade.Second_Quarter }}</td>
+            <td>{{ grade.Third_Quarter }}</td>
+            <td>{{ grade.Fourth_Quarter }}</td>
+          </ng-container>
+          <ng-container *ngIf="grade.grade_level < 7 || grade.grade_level > 10">
+            <td>{{ grade.Midterm }}</td>
+            <td>{{ grade.Final }}</td>
+          </ng-container>
+        </tr>
+  
+        Average Grade Row
+        <tr>
+          <td><strong>Average Grade</strong></td>
+          <ng-container *ngIf="grades[0]?.grade_level >= 7 && grades[0]?.grade_level <= 10">
+            <td><strong>{{ calculateAverage('First_Quarter') | number:'1.0-2' }}</strong></td>
+            <td><strong>{{ calculateAverage('Second_Quarter') | number:'1.0-2' }}</strong></td>
+            <td><strong>{{ calculateAverage('Third_Quarter') | number:'1.0-2' }}</strong></td>
+            <td><strong>{{ calculateAverage('Fourth_Quarter') | number:'1.0-2' }}</strong></td>
+          </ng-container>
+          <ng-container *ngIf="grades[0]?.grade_level < 7 || grades[0]?.grade_level > 10">
+            <td colspan="2"><strong>Midterm: {{ calculateAverage('Midterm') | number:'1.0-2' }}</strong></td>
+            <td colspan="2"><strong>Final: {{ calculateAverage('Final') | number:'1.0-2' }}</strong></td>
+          </ng-container>
+        </tr> 
+      </tbody>
     </table>
-</div>
+  </div>
+  

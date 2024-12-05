@@ -27,13 +27,17 @@
         } }
     </div>
 
-    <form [formGroup]="msgForm" (submit)="sendMessage()" class="chat-footer">
-        <input type="hidden" formControlName="message_sender" class="form-control" placeholder="Sender ID" />
-        <input type="hidden" formControlName="message_reciever" class="form-control" placeholder="Receiver ID" />
-        <textarea #messageInput formControlName="message" class="form-control" placeholder="Type a message..."
-            (input)="adjustInputHeight(messageInput)"></textarea>
-        <button class="btn btn-primary">
-            <i class="bi bi-send-fill"></i>
+    <form [formGroup]="msgForm" class="chat-footer" (ngSubmit)="sendMessage()">
+        <input type="hidden" formControlName="message_sender" />
+        <input type="hidden" formControlName="message_reciever" />
+      
+        <textarea 
+          #messageInput formControlName="message" class="form-control" placeholder="Type a message..."(input)="adjustInputHeight(messageInput)" (keydown.enter)="sendMessage(); $event.preventDefault()"aria-label="Type a message">
+        </textarea>
+      
+        <button type="submit" class="btn btn-primary">
+          <i class="bi bi-send-fill"></i>
         </button>
-    </form>
+      </form>
+      
 </div>

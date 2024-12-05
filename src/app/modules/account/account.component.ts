@@ -4,6 +4,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { HttpClient } from '@angular/common/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-account',
@@ -58,16 +59,17 @@ export class AccountComponent implements OnInit{
     this.Parent_pic = user.parent_pic || 'default-image-url';
   }
   saveChanges(): void {
-     if (this.profileForm.valid) {
+    if (this.profileForm.valid) {
       const formData = this.profileForm.value;
   
-      const Email = (formData.email);
-      const OldPassword = formData.oldPassword ?? ''; // Ensure this is a string
+      const Email = formData.email;
+      const OldPassword = formData.oldPassword ?? '';
   
       if (!Email || !OldPassword) {
-        console.error('Invalid email or missing old password');
+        Swal.fire('Error', 'Invalid email or missing old password', 'error');
         return;
       }
+  
       this.authService.update(Email, OldPassword, {
         fname: formData.fname,
         mname: formData.mname,
@@ -75,10 +77,10 @@ export class AccountComponent implements OnInit{
         email: formData.email,
         address: formData.address,
         newPassword: formData.newPassword,
-        newPassword_confirmation: formData.newPassword_confirmation // Include confirmation if needed
+        newPassword_confirmation: formData.newPassword_confirmation,
       }).subscribe(
         (result) => {
-          console.log('Profile updated successfully', result);
+          Swal.fire('Success', 'Profile updated successfully', 'success');
           const updatedUser = {
             ...this.AccDetails,
             fname: formData.fname,
@@ -91,41 +93,43 @@ export class AccountComponent implements OnInit{
           this.loadUserData();
         },
         (error) => {
-          console.error('Error updating profile:', error);
+          Swal.fire('Error', 'Failed to update profile. Please try again.', 'error');
           console.error('Error details:', error.error);
         }
       );
     } else {
-      console.error('Form is invalid');
+      Swal.fire('Error', 'Form is invalid. Please check your inputs.', 'error');
     }
   }
     
   onFileChange(event: any): void {
     const file = event.target.files[0];
     const user = JSON.parse(localStorage.getItem('user') || '{}');
-
-    if (file && user.email) { // Changed admin_id to email
-        const formData = new FormData();
-        formData.append('image', file);
-        formData.append('email', user.email); // Changed admin_id to email
-
-        this.authService.uploadImage(formData).subscribe(response => { // Changed adminService to authService
-            console.log(response); 
-            const newImageUrl = `http://localhost:8000/assets/parentPic/${response['image_url'].split('/').pop()}`; // Changed adminPic to parentPic
-            
-            // Update parentPic variable and the service
-            this.Parent_pic = newImageUrl; // Changed adminPic to parentPic
-            user.parent_pic = newImageUrl; // Changed admin_pic to parent_pic
-            localStorage.setItem('user', JSON.stringify(user)); 
-            
-            // Notify other components by updating the service
-            this.authService.updateParentPic(newImageUrl); // Changed adminService to authService and adminPic to parentPic
-            console.log('Parent Picture URL:', this.Parent_pic); // Changed adminPic to parentPic
-        });
+  
+    if (file && user.email) {
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('email', user.email);
+  
+      this.authService.uploadImage(formData).subscribe(
+        (response) => {
+          const newImageUrl = `http://localhost:8000/assets/parentPic/${response['image_url'].split('/').pop()}`;
+          this.Parent_pic = newImageUrl;
+          user.parent_pic = newImageUrl;
+          localStorage.setItem('user', JSON.stringify(user));
+          this.authService.updateParentPic(newImageUrl);
+  
+          Swal.fire('Success', 'Image uploaded successfully', 'success');
+        },
+        (error) => {
+          Swal.fire('Error', 'Failed to upload image. Please try again.', 'error');
+          console.error('Error details:', error.error);
+        }
+      );
     } else {
-        console.error('No file selected or email is missing'); // Changed admin ID to email
+      Swal.fire('Error', 'No file selected or email is missing', 'error');
     }
-}
+  }
       
 }
 

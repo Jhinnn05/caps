@@ -4,7 +4,7 @@
          <div class="col-12 col-md-3 col-lg-2 p-0 sidebar container">
              <div class="container mb-2 d-flex justify-content-between align-items-center">
                  <p class="h4 mt-3 pe-3 ms-1">Chats</p>
-                 <!-- <i  mat-button type="button"(click)="openDialog()" class="bi bi-pencil-square" style="font-size: 20px;"></i> -->
+                 <i  mat-button type="button"(click)="openDialog()" class="bi bi-pencil-square" style="font-size: 20px;"></i>
                  
              </div>
              <div class="container mb-3 mt-3">
@@ -29,7 +29,8 @@
                 }
             } @else if(messages && inputClicked == false) {
                 @for(msg of messages; track msg.message_id){
-                    <div class="user-list-item" [routerLink]="['/main/message/messagepage/messages/view/' + msg.message_sender]" routerLinkActive="active-link">
+                    <div class="user-list-item" [routerLink]="['/main/message/messagepage/messages/view/', msg.message_sender == uid ? msg.message_reciever : msg.message_sender]" 
+                    routerLinkActive="active-link">
                         <img src="/assets/mik.jpg" alt="User " class="rounded-circle me-1" width="40" height="40">
                         <div class="content">
                             <span>{{msg.sender_name}}</span>

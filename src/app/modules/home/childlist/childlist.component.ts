@@ -18,21 +18,64 @@ export class ChildlistComponent implements OnInit {
   selectedSection: any;
   email: any;
   AccDetails: any;
-  parents: any[] = []; // Use any[] for parents
+  parents: any;
   students: any[] = []; // Use any[] to store students
   selectedStudent: any | null = null;
   announcements: any[] = [];
 
-  constructor(private authService: AuthService, private router: Router) {}
+  currentDay: string;
+    currentDate: string;
+    lname = '';
+    fname = '';
+    mname = '';
+    activeLink: string = ''; 
 
+  constructor(public authService: AuthService, private router: Router) {
+    this.currentDay = this.getCurrentDay();
+    this.currentDate = this.getCurrentDate(); 
+  }
   preloader: boolean = false;
 
   ngOnInit(): void {
     this.fetchParent();
     this.fetchAnnouncements();
-
+    this.loadUserData();
     // Listen for router events to toggle preloader
-    
+  }
+  loadUserData() {
+    const userData = localStorage.getItem('user');
+    if (userData) {
+      const parsedData = JSON.parse(userData);
+      this.lname = parsedData.lname || "";
+      this.mname = parsedData.mname || "";
+      this.fname = parsedData.fname || "";
+    }
+  }
+  getCurrentDay(): string {
+    const date = new Date();
+    const options: Intl.DateTimeFormatOptions = {
+      weekday: 'long'
+    };
+    return date.toLocaleDateString(undefined, options); 
+  }
+  getCurrentDate(): string {
+    const date = new Date();
+    const options: Intl.DateTimeFormatOptions = { 
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric' 
+    };
+    return date.toLocaleDateString(undefined, options);
+  }
+  getGreeting(): string {
+    const hours = new Date().getHours();
+    if (hours < 12) {
+      return 'Good Morning, ';
+    } else if (hours < 18) {
+      return 'Good Afternoon, ';
+    } else {
+      return 'Good Evening, ';
+    }
   }
   
   fetchParent() {
@@ -53,7 +96,6 @@ export class ChildlistComponent implements OnInit {
       if (this.parents.length > 0 && this.parents[0].students.length > 0) {
         this.selectedStudent = this.parents[0].students[0];
       }
-
       console.log(this.parents);
     }, error => {
       console.error('Error fetching parents:', error);
@@ -68,6 +110,7 @@ export class ChildlistComponent implements OnInit {
   selectStudent(student: any) {
     this.authService.preloader = true;
     this.selectedStudent = student;
+    this.resetActiveLink(); 
   
     if (student && student.LRN) {
       localStorage.setItem('LRN', student.LRN);
@@ -96,24 +139,36 @@ export class ChildlistComponent implements OnInit {
 
   // Navigation methods
   navigateToFinance() {
-    this.preloader = true;
-    this.router.navigate(['/main/home/home/childlist/childmain/finance']).then(() => {
-      this.preloader = false; // Stop preloader after navigation
-    });
+    this.activeLink = 'finance';
+    this.authService.preloader = true;
+    setTimeout(() => {
+      this.router.navigate(['/main/home/home/childlist/childmain/finance']).then(() => {
+      this.authService.preloader = false;
+      });
+    }, 500);
   }
 
   navigateToGrades() {
-    this.preloader = true;
-    this.router.navigate(['/main/home/home/childlist/acadsmain']).then(() => {
-      this.preloader = false; // Stop preloader after navigation
-    });
+    this.activeLink = 'grades';
+    this.authService.preloader = true;
+    setTimeout(() => {
+      this.router.navigate(['/main/home/home/childlist/acadsmain']).then(() => {
+      this.authService.preloader = false;
+      });
+    }, 500);
   }
 
   navigateToAttendance() {
-    this.preloader = true;
-    this.router.navigate(['/main/home/home/childlist/attendancemain/attendance']).then(() => {
-      this.preloader = false; // Stop preloader after navigation
-    });
+    this.activeLink = 'attendance';
+    this.authService.preloader = true;
+    setTimeout(() => {
+      this.router.navigate(['/main/home/home/childlist/attendancemain/attendance']).then(() => {
+      this.authService.preloader = false;
+      });
+    }, 500);
+  }
+  resetActiveLink() {
+    this.activeLink = ''; // Reset the active link when selecting a child
   }
   
 }

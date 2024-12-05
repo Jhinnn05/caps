@@ -22,7 +22,7 @@ export class ViewComponent implements OnInit{
   convo: any = {};
   sid: any;
   uid: any;
-  
+  private intervalId: any;
 
   msgForm = new FormGroup({
     message_sender: new FormControl(localStorage.getItem('id')),
@@ -42,13 +42,32 @@ export class ViewComponent implements OnInit{
 
   ngOnInit(): void {
     const uid = localStorage.getItem('id')
-    this.aroute.paramMap.subscribe(params => {
+    
+    this.aroute.paramMap.subscribe((params) => {
       const sid = params.get('sid');
       this.sid = sid;
       this.uid = uid;
       this.msgForm.get('message_reciever')?.setValue(this.sid);
       this.getConvo(sid, uid);
-  });
+    });
+
+    this.startPolling();
+  }
+
+  ngOnDestroy(): void {
+    this.stopPolling(); // Clear the interval when the component is destroyed
+  }
+
+  startPolling(): void {
+    this.intervalId = setInterval(() => {
+      this.getConvo(this.sid, this.uid);
+    }, 10000); // 10 seconds
+  }
+
+  stopPolling(): void {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
   
 
@@ -63,14 +82,22 @@ export class ViewComponent implements OnInit{
 
 
 
-  sendMessage(){
+sendMessage() {
+  if (this.msgForm.valid) {
     console.log(this.msgForm.value);
-    this.auth.sendMessage(this.msgForm.value).subscribe((result: any) => {
-      console.log(result);
-      // You can also update the conversation list here
-      this.getConvo(this.aroute.snapshot.paramMap.get('sid'), this.uid);
-      this.msgForm.get('message')?.reset(); 
-    })
+    this.auth.sendMessage(this.msgForm.value).subscribe(
+      (result: any) => {
+        console.log(result);
+        this.getConvo(this.aroute.snapshot.paramMap.get('sid'), this.uid); // Refresh the conversation
+        this.msgForm.get('message')?.reset(); // Clear the message input
+      },
+      (error: any) => {
+        console.error('Error sending message:', error);
+      }
+    );
+  } else {
+    console.warn('Message form is invalid');
   }
+}
 
 }

@@ -1,44 +1,62 @@
-
-<!-- <div *ngIf="authService.preloader" class="preloader-container">
-  <div class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
+<div class="container-fluid">
+  <div class="banner">
+    <!-- Text Content on the Left -->
+    <div class="text-content">
+      <div class="date ms-3">{{ currentDay }}, {{ currentDate }}</div>
+      <h1 class="welcome-message ms-2">{{ getGreeting() }} {{ fname }} {{ lname }}!</h1>
+    </div>
+    <!-- Image on the Right -->
+    <div class="illustration">
+      <img src="aaa.png" alt="Illustration" class="img-fluid w-100">
+    </div>
   </div>
-</div> -->
-  <div class="row h-100 messenger-container flex-column flex-md-row"*ngFor="let parent of parents">
-    <div class="col-12 col-md-3 col-lg-2 p-0 sidebar container">
-      <!-- Children Section -->
-      <h4>Children</h4>
-      <div class="students-container">
-          <div class="student-item" *ngFor="let student of parent.students" (click)="selectStudent(student)" style="cursor: pointer;">
-              <img src="profile.jpg" alt="User " class="rounded-circle me-1" width="40" height="40">
-              <span class="student-name">{{ student.fname }} {{ student.lname }} {{ student.mname ? student.mname : '' }}</span>
-          </div>
-      </div>
 
-      <!-- Announcements Section -->
-      <h5 class="mt-2">Announcements</h5>
+
+  <div class="row messenger-container">
+    <!-- Sidebar -->
+    <div class="col-12 col-md-3 col-lg-2 p-0 sidebar">
+      <div class="students-container" *ngFor="let parent of parents">
+        <h4 class="m-3">Children</h4>
+        <div class="student-item" *ngFor="let student of parent.students" (click)="selectStudent(student)" style="cursor: pointer;">
+          <img src="profile.jpg" alt="User" class="rounded-circle me-1" width="40" height="40">
+          <span class="student-name">{{ student.fname }} {{ student.lname }} {{ student.mname ? student.mname : '' }}</span>
+        </div>
+      </div>
+      <h5 class="m-3">Announcements</h5>
       <div id="announcementsContainer" class="scrollable-container">
-          <!-- Loop through announcements array -->
-          @for (ann of announcements; track ann) {
-          <div class="announcement-section mt-2 p-3 shadow-sm">
-              <div class="d-flex justify-content-between align-items-start">
-                  <h5 class="announcement-title mb-2">{{ ann.title }}</h5>
-                  <span class="announcement-date">{{ ann.created_at | date: 'medium' }}</span>
-              </div>
-              <p class="announcement-text mb-1">{{ ann.announcement }}</p>
+        <!-- Loop through announcements array -->
+        @for (ann of announcements; track ann) {
+        <div class="announcement-section mt-2 p-3 shadow-sm">
+          <div class="d-flex justify-content-between align-items-start">
+            <h5 class="announcement-title mb-2">{{ ann.title }}</h5>
+            <span class="announcement-date">{{ ann.created_at | date: 'medium' }}</span>
           </div>
-          }
+          <p class="announcement-text mb-1">{{ ann.announcement }}</p>
+        </div>
+        }
       </div>
     </div>
 
-    <div class="col-12 col-md-9 col-lg-10 p-0 main-content">
-      <!-- Child Details Section -->
+    <!-- Main Content -->
+    <div class="col-12 col-md-9 col-lg-10 p-0 mt-3 main-content">
       <div class="chat-header d-flex align-items-center">
         <div class="child-info">
-          <h3>{{selectedStudent.fname}} {{selectedStudent.mname}} {{selectedStudent.lname}}</h3>
+          <h3>{{ selectedStudent.fname }} {{ selectedStudent.mname }} {{ selectedStudent.lname }}</h3>
           <p>LRN: {{ selectedStudent.LRN || 'N/A' }}</p>
-          <p>Section/Strand: {{ selectedStudent.section?.section_name }} {{ selectedStudent.section?.strand }}</p>
+          <p>Section/Strand: 
+            {{ selectedStudent.section?.section_name }} 
+            {{ selectedStudent.section?.strand }}
+            <!-- Conditionally add hyphen if grade_level is not 11 or 12 -->
+            {{ (selectedStudent.grade_level !== '11' && selectedStudent.grade_level !== '12') ? '-' : '' }}
+          </p>
+          
           <p>Grade Level: {{ selectedStudent.section?.grade_level || 'N/A' }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="preloader" class="preloader-container">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
         </div>
       </div>
 
@@ -46,26 +64,37 @@
       <nav class="navbar-container">
         <ul class="navbar nav">
           <li class="navbar-list">
-            <a class="navlink" (click)="navigateToFinance()">
-              <i class="bi bi-wallet-fill"></i>Financial Statement
+            <a 
+              class="navlink" 
+              (click)="navigateToFinance()" 
+              [ngClass]="{'active': activeLink === 'finance'}">
+              <i class="bi bi-wallet-fill"></i> Financial Statement
             </a>
           </li>
           <li class="navbar-list">
-            <a class="navlink" (click)="navigateToGrades()">
-              <i class="bi bi-award"></i>Grades
+            <a 
+              class="navlink" 
+              (click)="navigateToGrades()" 
+              [ngClass]="{'active': activeLink === 'grades'}">
+              <i class="bi bi-award"></i> Grades
             </a>
           </li>
           <li class="navbar-list">
-            <a class="navlink" (click)="navigateToAttendance()">
-              <i class="bi bi-activity"></i>Attendance Report
+            <a 
+              class="navlink" 
+              (click)="navigateToAttendance()" 
+              [ngClass]="{'active': activeLink === 'attendance'}">
+              <i class="bi bi-activity"></i> Attendance Report
             </a>
           </li>
         </ul>
       </nav>
+      
 
-      <!-- Content for each section based on the selected tab -->
+      <!-- Content for each section -->
       <div class="content-section">
         <router-outlet></router-outlet>
       </div>
     </div>
   </div>
+</div>

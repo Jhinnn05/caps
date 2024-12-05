@@ -1,14 +1,24 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ChildlistComponent } from "./childlist/childlist.component";
 import { AnnouncementComponent } from "./announcement/announcement.component";
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [ChildlistComponent, AnnouncementComponent],
+  imports: [ChildlistComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit{
+    
+  constructor(auth:AuthService) {
+    
+  }
+  ngOnInit(): void {
+    
+  }
+  
 
+  
 }

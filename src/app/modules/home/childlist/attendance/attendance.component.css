@@ -84,6 +84,7 @@ thead th {
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 columns for weekdays */
   gap: 10px; /* Space between cells */
+  cursor: pointer;
 }
 
 .calendar-cell {

@@ -8,6 +8,7 @@ import { Observable,BehaviorSubject } from 'rxjs';
 export class AuthService {
   private apiUrl = 'http://localhost:8000/api'; //Laravel backend URL
   id = localStorage.getItem('id');
+  token = localStorage.getItem('token'); // Retrieve the token dynamically
   private adminPicSubject = new BehaviorSubject<string | null>(null); // This will store the admin image URL
   adminPic$ = this.adminPicSubject.asObservable();
   constructor(private http: HttpClient) {}
@@ -26,10 +27,9 @@ export class AuthService {
     return this.http.post(this.apiUrl + '/login', data);
   }
   logout(): Observable<any> {
-    const token = localStorage.getItem('token'); // Retrieve the token dynamically
-    const headers = { Authorization: `Bearer ${token}` }; // Correctly format the headers
-    console.log('token:', token);
-    return this.http.post(`${this.apiUrl}/logout`, {}, { headers }); // Pass headers in the request
+    const headers = {'Authorization': 'Bearer ' + this.token};
+    console.log('token:', headers);
+    return this.http.post(this.apiUrl + '/logout', {}, { headers }); // Pass headers in the request
   }
 
   updatePass(email:any){
@@ -75,6 +75,12 @@ export class AuthService {
   }
   sendMessage(mdata: any){
     return this.http.post(this.apiUrl + '/sendMessage', mdata );
+  }
+  getRecipients(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl + '/getrecepeints');
+  }
+  composeMessage(messageData: any): Observable<any> {
+    return this.http.post(this.apiUrl + '/composemessage', messageData);
   }
 
   //announcements

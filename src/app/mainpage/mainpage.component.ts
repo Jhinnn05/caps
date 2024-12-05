@@ -1,9 +1,9 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, computed, OnInit, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SidenavComponent } from '../sidenav/sidenav.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
@@ -24,21 +24,40 @@ import { AuthService } from '../auth.service';
   templateUrl: './mainpage.component.html',
   styleUrl: './mainpage.component.css'
 })
-export class MainpageComponent {
+export class MainpageComponent implements OnInit{
   collapsed = signal(false)
   sidenavWidth = computed(() => this.collapsed() ? '65px' : '250px');  
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
+  
+  adminPic: string | null = null;
+  ngOnInit(): void {
+    
+    this.authService.adminPic$.subscribe((newImageUrl) => {
+      if (newImageUrl) {
+        this.adminPic = newImageUrl; // Update the component's admin picture
+      }
+    });
+
+    // Optionally, initialize with the image from localStorage
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    if (user && user.parent_pic) {
+      this.adminPic = user.parent_pic;
+    }
+  }
 
   onLogout() {
     this.authService.logout().subscribe(
         (response) => {
-            console.log(response.message); // Handle success
-            localStorage.removeItem('token'); // Clear token from local storage
-            // this.router.navigate(['/login']); // Redirect to login page
+          console.log('Logout successful:', response);
+          localStorage.removeItem('token');
+          localStorage.removeItem('user'); 
+          localStorage.removeItem('admin_id');// Clear the token from localStorage
+          this.router.navigate(['/login']);
         },
         (error) => {
             console.error('Logout failed', error); // Handle error
         }
     );
 }
+
 }

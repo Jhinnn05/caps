@@ -6,10 +6,17 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { AuthService } from '../../../../auth.service';
+import Swal from 'sweetalert2';
 
 interface AttendanceRecord {
   date: Date;
   attendance_status: 'present' | 'absent' | 'late';
+  subject_name: string;  // Add subject name to attendance records
+  subject_count: number;  // Add subject count to attendance records
+}
+interface Month {
+  value: Date;
+  viewValue: string;
 }
 
 @Component({
@@ -26,120 +33,141 @@ interface AttendanceRecord {
 })
 
 export class AttendanceComponent implements OnInit{
-  months = [
-    { value: new Date(2024, 7), viewValue: 'August' },
-    { value: new Date(2024, 8), viewValue: 'September' },
-    { value: new Date(2024, 9), viewValue: 'October' },
-    { value: new Date(2024, 10), viewValue: 'November' },
-    { value: new Date(2024, 11), viewValue: 'December' },
-    { value: new Date(2024, 0), viewValue: 'January' },
-    { value: new Date(2024, 1), viewValue: 'February' },
-    { value: new Date(2024, 2), viewValue: 'March' },
-    { value: new Date(2024, 3), viewValue: 'April' },
-    { value: new Date(2024, 4), viewValue: 'May' },
-  ];
-  
-  selectedMonth: any = this.months[7]; // Default to August
-  days = [ 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+  months = Array.from({ length: 12 }, (_, i) => ({
+    value: new Date(2024, i),
+    viewValue: new Intl.DateTimeFormat('en', { month: 'long' }).format(new Date(2024, i)),
+  }));
+
+  selectedMonth = this.months[7]; // Default: August
+  days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
   attendanceRecords: AttendanceRecord[] = [];
-  cid: string | null = null; // LRN
-  
-  calendarDates: { date: Date, attendanceStatus: string }[] = []; // Store the fetched dates for the current month
-  // Assuming `month.value` is in a Date or number format (e.g., month index from 0 to 11)
-  currentMonth = new Date().getMonth(); // gets the current month index (0 = January, 1 = February, etc.)
+  calendarDates: { date: Date; status: string; subject_name: string  }[] = [];
+  cid: string | null = null;
+  subjectCount: number = 0;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.loadCidFromLocalStorage();
-    this.loadAttendance();
-    this.refreshCalendarDates(); // Initial calendar loading
-  }
-
-  loadCidFromLocalStorage(): void {
     this.cid = localStorage.getItem('LRN');
+    this.loadAttendance();
   }
 
   loadAttendance(): void {
-    if (this.cid) {
-        this.authService.getAttendance(this.cid).subscribe(data => {
-            this.attendanceRecords = data;
-            console.log('Fetched attendance records:', this.attendanceRecords);
-            this.refreshCalendarDates();  // Call this to refresh the calendar with attendance data
-        }, error => {
-            console.error('Error fetching attendance records:', error);
-        });
+    if (!this.cid) return console.error('LRN not found in local storage.');
+    this.authService.getAttendance(this.cid).subscribe(
+      (data: AttendanceRecord[]) => {
+        this.attendanceRecords = data.map((record) => ({
+          ...record,
+          date: new Date(record.date),  // Ensure date is a Date object
+        }));
+        this.subjectCount = this.attendanceRecords[0]?.subject_count || 0;  // Get subject count from the first record
+        this.updateCalendar();
+      },
+      (error) => console.error('Error fetching attendance:', error)
+    );
+  }
+  showAllSubjectRecords(date: Date): void {
+    // Fetch records for the selected date
+    const recordsForDate = this.attendanceRecords.filter(record => 
+      new Date(record.date).toDateString() === date.toDateString()
+    );
+  
+    // Prepare modal content
+    let modalContent = '<h2>' + date.toDateString() + '</h2>';
+    
+    if (recordsForDate.length === 0) {
+      modalContent += '<p>No records available for this date.</p>';
     } else {
-        console.error('LRN not found in local storage.');
+      modalContent += '<ul>';
+      recordsForDate.forEach(record => {
+        modalContent += `<li>${record.subject_name}: ${record.attendance_status}</li>`;
+      });
+      modalContent += '</ul>';
     }
-}
-
-
-getCalendarDates(): { date: Date, attendanceStatus: string }[] {
-  const startOfMonth = new Date(this.selectedMonth.value.getFullYear(), this.selectedMonth.value.getMonth(), 1);
-  const endOfMonth = new Date(this.selectedMonth.value.getFullYear(), this.selectedMonth.value.getMonth() + 1, 0);
-  const datesWithStatus: { date: Date, attendanceStatus: string }[] = [];
-
-  // Create a map to store attendance status by date
-  const attendanceMap: Map<string, string> = new Map();
-
-  // Populate the attendanceMap with attendance records fetched from the database
-  this.attendanceRecords.forEach(record => {
-      const recordDate = new Date(record.date).toDateString(); // Convert to string for easy comparison
-      attendanceMap.set(recordDate, record.attendance_status);
-  });
-
-  // Loop through each day in the selected month (only weekdays)
-  for (let day = startOfMonth.getDate(); day <= endOfMonth.getDate(); day++) {
-      const currentDate = new Date(this.selectedMonth.value.getFullYear(), this.selectedMonth.value.getMonth(), day);
-      
-      // Only include weekdays (Monday to Friday, i.e., day index 1-5)
-      if (currentDate.getDay() >= 1 && currentDate.getDay() <= 5) {
-          const dateKey = currentDate.toDateString();  // Convert to string to match with the attendanceMap
-          const status = attendanceMap.get(dateKey) || 'No Record';  // Default to 'No Record' if no status is found
-
-          // Add the date and status to the result array
-          datesWithStatus.push({
-              date: currentDate,
-              attendanceStatus: status
-          });
-      }
+  
+    // Display modal using SweetAlert2
+    Swal.fire({
+      title: 'Subject Records',
+      html: modalContent,
+      showCloseButton: true,
+      confirmButtonText: 'Close',
+    });
+  }
+  
+  handleDateClick(date: Date): void {
+    this.showAllSubjectRecords(date);
   }
 
-  return datesWithStatus;
-}
+  updateCalendar(): void {
+    const start = new Date(this.selectedMonth.value.getFullYear(), this.selectedMonth.value.getMonth(), 1);
+    const end = new Date(start.getFullYear(), start.getMonth() + 1, 0);
+  
+    // Create a map to hold attendance records by date
+    const attendanceMap = new Map<string, { status: string; subject_name: string }>();
+  
+    // Populate the map with attendance records
+    this.attendanceRecords.forEach((record) => {
+      attendanceMap.set(new Date(record.date).toDateString(), {
+        status: record.attendance_status,
+        subject_name: record.subject_name,  // Include subject name
+      });
+    });
+  
+    // Create calendarDates with the required properties
+    this.calendarDates = Array.from({ length: end.getDate() }, (_, i) => new Date(start.getFullYear(), start.getMonth(), i + 1))
+      .filter((date) => date.getDay() >= 1 && date.getDay() <= 5) // Weekdays only
+      .map((date) => {
+        const attendance = attendanceMap.get(date.toDateString()) || { status: 'No Record', subject_name: 'N/A' };
+        return {
+          date,
+          status: attendance.status,
+          subject_name: attendance.subject_name,  // Include subject name
+        };
+      });
+  }
+
+  getAverageAttendance(): number {
+    if (this.subjectCount === 0) return 0;  // Avoid division by zero
+    const totalPresent = this.getTotalDaysPresent();  // Get the total present days
+    return totalPresent / this.subjectCount;  // Calculate average attendance
+  }
 
   onMonthClick(month: { value: Date; viewValue: string }): void {
-    this.selectedMonth = month; // Update the selected month
-    this.refreshCalendarDates(); // Refresh the calendar to display weekdays
+    this.selectedMonth = month;
+    this.updateCalendar();
   }
 
-  refreshCalendarDates(): void {
-    this.calendarDates = this.getCalendarDates(); // Refresh dates for the current month
+  getDaysOfSchool(month: Date): number {
+    const start = new Date(month.getFullYear(), month.getMonth(), 1);
+    const end = new Date(month.getFullYear(), month.getMonth() + 1, 0);
+    return Array.from({ length: end.getDate() }, (_, i) => new Date(start.getFullYear(), start.getMonth(), i + 1))
+      .filter((date) => date.getDay() >= 1 && date.getDay() <= 5).length; // Weekdays only
   }
 
   getAttendanceForMonth(month: Date): number {
-    // Filter attendanceRecords to count how many days are marked 'Present' for the selected month
-    return this.attendanceRecords.filter(record => {
-      const recordDate = new Date(record.date);
-      return recordDate.getMonth() === month.getMonth() && recordDate.getFullYear() === month.getFullYear() && record.attendance_status === 'present';
-    }).length;
+    return this.attendanceRecords.filter(
+      (record) =>
+        new Date(record.date).getMonth() === month.getMonth() &&
+        new Date(record.date).getFullYear() === month.getFullYear() &&
+        record.attendance_status === 'present'
+    ).length;
   }
 
   getTotalDaysPresent(): number {
-    // Calculate total days present from all attendance records
-    return this.attendanceRecords.filter(record => record.attendance_status === 'present').length;
+    return this.attendanceRecords.filter((record) => record.attendance_status === 'present').length;
   }
-  /**
-   * Method to calculate the total number of school days (Monday to Friday) across all selected months.
-   */
+
+  getAttendanceClass(status: string): string {
+    return { present: 'present', absent: 'absent', late: 'late' }[status] || 'no-record';
+  }
+  
   getTotalDaysOfSchool(): number {
     let totalDays = 0;
-
+  
     this.months.forEach(month => {
       const startOfMonth = new Date(month.value.getFullYear(), month.value.getMonth(), 1);
       const endOfMonth = new Date(month.value.getFullYear(), month.value.getMonth() + 1, 0);
-
+  
       for (let day = startOfMonth.getDate(); day <= endOfMonth.getDate(); day++) {
         const currentDate = new Date(month.value.getFullYear(), month.value.getMonth(), day);
         if (currentDate.getDay() >= 1 && currentDate.getDay() <= 5) {
@@ -147,35 +175,13 @@ getCalendarDates(): { date: Date, attendanceStatus: string }[] {
         }
       }
     });
-
+  
     return totalDays;
   }
-  getDaysOfSchool(month: Date): number {
-    let totalDays = 0;
-    const startOfMonth = new Date(month.getFullYear(), month.getMonth(), 1);
-    const endOfMonth = new Date(month.getFullYear(), month.getMonth() + 1, 0);
-
-    for (let day = startOfMonth.getDate(); day <= endOfMonth.getDate(); day++) {
-        const currentDate = new Date(month.getFullYear(), month.getMonth(), day);
-        // Only count weekdays (Monday to Friday)
-        if (currentDate.getDay() >= 1 && currentDate.getDay() <= 5) {
-            totalDays++;
-        }
-    }
-
-    return totalDays;
-}
-getAttendanceClass(status: string): string {
-  switch (status) {
-    case 'present':
-      return 'present';
-    case 'absent':
-      return 'absent';
-    case 'late':
-      return 'late';
-    default:
-      return 'no-record'; // Default class for "No Record"
+  getCountForStatus(date: Date, status: string): number {
+    // Count the number of attendance records with the specified status on the given date
+    return this.attendanceRecords.filter(record => 
+      new Date(record.date).toDateString() === date.toDateString() && record.attendance_status === status
+    ).length;
   }
-}
-
 }

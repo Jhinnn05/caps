@@ -38,41 +38,19 @@ import { RouterLink, RouterModule } from '@angular/router';
   styleUrl: './finance-statement.component.css'
 })
 export class FinanceStatementComponent implements OnInit{
-  // LRN:{ id: string | null } = {id:localStorage.getItem('LRN')}
-  students: any;
-  lname:any;
-  fname: any;
-  mname: any;
-  currentDate: any;
-  remaining_balance: any;
-  tuition: any;
-  total_paid: any;
-  name: any;
-  LRN:any;
+  filename: string | null = null;  // Store the filename (image)
   constructor(
-    private conn: AuthService
+    public conn: AuthService
   ){}
   
-  formDate(date: Date):string{
-    const options: Intl.DateTimeFormatOptions = {
-      month: 'long',
-      day: '2-digit',
-      year: 'numeric',
-    };
-    return date.toLocaleDateString('en-US', options);
-  }
 
   ngOnInit(): void {
-    this.currentDate = this.formDate(new Date());
-    this.LRN = localStorage.getItem('LRN');
-    this.conn.printSOA(this.LRN).subscribe((result: any) => {
-      this.students = result.payments;
-      this.name = result.payments[0].name;
-      this.remaining_balance = result.remaining_balance;
-      this.tuition = result.payments[0].tuition;
-      this.total_paid = result.total_paid;
-      console.log(this.students, this.tuition);
-      
-    })
+    const LRN = localStorage.getItem('LRN');
+
+    // Fetch the filename for the given LRN
+    this.conn.printSOA(LRN).subscribe((result: any) => {
+      this.filename = result.filename;  // Get the filename from the response
+      console.log(this.filename);  // Log to check the filename
+    });
   }
 }

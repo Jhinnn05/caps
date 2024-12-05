@@ -2,12 +2,12 @@
   <button mat-icon-button class="toggle-button" (click)="collapsed.set(!collapsed())">
     <mat-icon><i class="bi bi-list-task text-light"></i></mat-icon>
   </button>
-    <img [width]="180" [height]="40" src="B.jpg"/>
+    
     <!-- <h3>NLAC Portal</h3> -->
     <span class="example-spacer"></span>
   <!-- Profile Button with Dropdown -->
   <button mat-icon-button class="example-icon circle-btn ms-2" [matMenuTriggerFor]="profileMenu">
-    <img src="profile.jpg" class="prof-image" />
+    <img [width]="180" [height]="40" [src]="adminPic" class="prof-image" alt="Admin Profile Picture"/>
   </button>
   
   <!-- Profile Dropdown Menu -->

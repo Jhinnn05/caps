@@ -1,18 +1,29 @@
+.container {
+  padding-left: 0; 
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 100%;
+  margin: 20px;
+}
+
 body, html {
   height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
+  border-radius: 20px;
 }
 
 .messenger-container {
   display: flex;
-  height: 100%;
+
 }
 
 .sidebar {
-  flex: 0 0 340px;
-  border-right: 1px solid #ddd;
-  overflow-y: auto;
+  flex: 0 0 370px;
+  padding-left: 0; 
+  /* margin-top: 0%; */
+
 }
 
 .main-content {
@@ -20,6 +31,9 @@ body, html {
   display: flex;
   flex-direction: column;
   background-color: white;
+  padding-left: 0; 
+  border-radius: 20px;
+  
 }
 
 .chat-header {
@@ -38,16 +52,48 @@ body, html {
 }
 
 .navbar-list {
-  margin: 0 10px;
+  margin: 20px 30px;
   cursor: pointer;
 }
 
+/* General styling for navbar links */
 .navlink {
+  text-decoration: none;
+  color: black;
+  position: relative;
+  padding: 8px 16px;
   display: inline-block;
-  padding: 10px 15px;
-  color: #ffffff; /* Button text color */
-  background-color: #5f5f5f; /* Button background color */
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 4px; /* Optional: To round the corners of the buttons */
 }
+
+/* Hover effect: change background color to light gray */
+.navlink:hover {
+  background-color: lightgray;
+}
+
+/* Active link: change background color to light blue */
+.navlink.active {
+  background-color: lightblue;
+  color: rgb(0, 0, 0); /* Optionally change text color when active */
+}
+
+/* Optional: Customize the icon color when hovered or active */
+.navlink i {
+  margin-right: 8px;
+  transition: color 0.3s ease;
+}
+
+/* Change icon color on hover */
+.navlink:hover i {
+  color: gray;
+}
+
+/* Keep the icon color consistent when active */
+.navlink.active i {
+  color: white;
+}
+
 
 /* Announcement Styling */
 .announcement-section {
@@ -88,39 +134,103 @@ body, html {
   margin-left: auto;
   align-self: flex-start;
 }
+
 .scrollable-container {
-  max-height: 500px; /* Set your desired height */
-  overflow-y: auto; /* Enable vertical scrolling */
-  overflow-x: hidden; /* Prevent horizontal scrolling */ /* Optional: Add a border for better visibility */
-  padding: 10px; /* Optional: Add padding */
-  border-radius: 5px; /* Optional: Rounded corners */
+  max-height: 500px; 
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  padding: 10px; 
+  border-radius: 5px; 
 }
+
 /* Hide scrollbar for WebKit browsers (Chrome, Safari, Opera) */
 .scrollable-container::-webkit-scrollbar {
-  display: none; /* Hides the scrollbar */
+  display: none; 
 }
 
 /* Hide scrollbar for Firefox */
 .scrollable-container {
-  scrollbar-width: none; /* Hides the scrollbar in Firefox */
+  scrollbar-width: none; 
 }
+
 .students-container {
-  margin-top: 10px; /* Optional: Add some space above the container */
+  margin-top: 10px; 
 }
 
 .student-item {
-  padding: 10px; /* Add padding around each student item */
-  display: flex; /* Use flexbox for alignment */
-  align-items: center; /* Center items vertically */
-  border-bottom: 1px solid #ccc; /* Add a line (divider) between items */
+  padding: 10px; 
+  display: flex; 
+  align-items: center; 
+  border-bottom: 1px solid #ccc; 
 }
 
 .student-item:last-child {
-  border-bottom: none; /* Remove the divider for the last item */
+  border-bottom: none; 
 }
 
 .student-name {
-  margin-left: 10px; /* Add space between the image and the name */
+  margin-left: 10px; 
+}
+
+.preloader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  background-color: #22bdff;
+  color: #ffffff;
+  padding: 20px 0; 
+  border-radius: 20px;
+  width: 100%;
+  max-width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  gap: 20px; 
+}
+
+.illustration {
+  display: flex;
+  align-items: right;
+  justify-content: right;
+  max-width: 60%; 
+  padding-right: 20px;
+}
+
+.illustration img {
+  width: 100%;
+  max-width: 600px;
+  margin-left: 4rem;
+}
+
+.date {
+  font-size: 20px;
+  padding-bottom: 4rem;
+  font-weight: 400;
+}
+
+.welcome-message {
+  font-size: 50px;
+  font-weight: 500;
+}
+
+.subtext {
+  font-size: 16px;
+  margin-top: 5px;
+  opacity: 0.9;
+}
+
+.text-content {
+  max-width: 70%;
 }
 .preloader-container {
   position: fixed;
