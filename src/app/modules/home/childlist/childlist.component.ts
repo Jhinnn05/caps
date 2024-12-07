@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-import { FinanceStatementComponent } from './finance-statement/finance-statement.component';
-import { ChildmainComponent } from './childmain/childmain.component';
+import {  Router, RouterModule, } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../../auth.service';
-
+import { AnnouncementComponent } from '../announcement/announcement.component';
 
 @Component({
   selector: 'app-childlist',
   standalone: true,
-  imports: [RouterModule,CommonModule],
+  imports: [RouterModule,CommonModule,AnnouncementComponent],
   templateUrl: './childlist.component.html',
   styleUrl: './childlist.component.css'
 })
@@ -38,7 +36,7 @@ export class ChildlistComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchParent();
-    this.fetchAnnouncements();
+   
     this.loadUserData();
     // Listen for router events to toggle preloader
   }
@@ -129,13 +127,7 @@ export class ChildlistComponent implements OnInit {
     }
   }
 
-  //fetch Announcements
-  fetchAnnouncements(){
-    this.authService.getannouncement().subscribe((data) => {
-      this.announcements = data;
-      console.log(this.announcements); 
-    });
-  } 
+  
 
   // Navigation methods
   navigateToFinance() {

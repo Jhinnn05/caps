@@ -22,7 +22,7 @@
         <!-- Profile Edit Card -->
         <div class="card flex-lg-column flex-md-row">
           <div class="header-container mt-3">
-            <h1 class="fs-50 text-black font-w600 ms-3">Edit Profile</h1>
+            <h3 class="fs-50 text-black font-w600 ms-3">Edit Profile</h3>
             <div class="button-group">
               <button (click)="saveChanges()" class="btn btn-primary rounded">Save Changes</button>
             </div>
@@ -44,19 +44,19 @@
                   <div class="col-xl-4 col-sm-6">
                     <div class="form-group">
                       <label for="firstName">Firstname</label>
-                      <input formControlName="fname" id="firstName" placeholder="Enter name" class="form-control">
+                      <input formControlName="fname" id="firstName" placeholder="Enter name" class="form-control" readonly>
                     </div>
                   </div>
                   <div class="col-xl-4 col-sm-6">
                     <div class="form-group">
                       <label for="middleName">Middlename</label>
-                      <input formControlName="mname" id="middleName" placeholder="Enter Middlename" class="form-control">
+                      <input formControlName="mname" id="middleName" placeholder="Enter Middlename" class="form-control"readonly>
                     </div>
                   </div>
                   <div class="col-xl-4 col-sm-6">
                     <div class="form-group">
                       <label for="lastName">Lastname</label>
-                      <input formControlName="lname" id="lastName" placeholder="Enter lastname" class="form-control">
+                      <input formControlName="lname" id="lastName" placeholder="Enter lastname" class="form-control"readonly>
                     </div>
                   </div>
                 </div>

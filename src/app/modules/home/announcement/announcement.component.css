@@ -1,117 +1,66 @@
-/* Basic reset and layout styles */
-
-/* Styles for form and list */
-.announcement-form,
-.announcement-list {
-    background: #fff;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0.8rem; /* Reduced padding */
-    flex: 1;
-    max-width: 300px; /* Set a maximum width for the container */
-    margin-left: auto; /* Pushes the container to the right */
-}
-
-.announcement-form {
-    flex: 1 1 100%; /* Adjust flex for smaller containers */
-}
-
-.announcement-list {
-    flex: 1 1 100%;
-    overflow-y: auto; /* Enable vertical scrolling */
-    max-height: 70vh; /* Adjust this value as needed */
-}
-
-/* Form and button styles */
-.announcement-form h2,
-.announcement-list h2 {
-    margin-bottom: 1rem;
-    font-size: 1.4rem;
-    color: #0056b3;
-}
-
-.form-group {
-    margin-bottom: 0.75rem;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.4rem;
+/* Announcement Styling */
+.announcement-section {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin-top: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+  }
+  
+  .announcement-title {
     font-weight: 600;
-    font-size: 0.9rem;
-}
-
-.form-group input,
-.form-group textarea {
-    width: 100%;
-    padding: 0.6rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
-
-.form-group textarea {
-    resize: vertical;
-}
-
-button {
-    background-color: #0056b3;
-    color: #fff;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 4px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #003d79;
-}
-
-/* Announcement list styles */
-.announcement-list .announcement {
-    margin-bottom: 1rem;
-    padding: 0.8rem;
-    border-bottom: 1px solid #eee;
-}
-
-.announcement-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.4rem;
-}
-
-.announcement-header h3 {
-    margin: 0;
-    font-size: 1.2rem;
+    font-size: 18px;
     color: #333;
-    flex: 1;
-}
-
-.date {
-    font-size: 0.8rem;
+  }
+  
+  .announcement-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.5;
+  }
+  
+  .announcement-section:hover {
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .shadow-sm {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .announcement-date {
+    font-size: 14px;
     color: #888;
-}
-
-.announcement-actions {
-    display: flex;
-    gap: 0.4rem;
-}
-
-.announcement-actions a {
-    color: #0056b3;
-    font-size: 1rem;
-    text-decoration: none;
-}
-
-.announcement-actions a:hover {
-    color: #003d79;
-}
-
-.announcement p {
-    margin: 0;
-    line-height: 1.4;
-    font-size: 0.9rem;
-}
+    font-style: italic;
+    margin-left: auto;
+    align-self: flex-start;
+  }
+  
+  .scrollable-container {
+    max-height: 500px; 
+    overflow-y: scroll; /* Keep content scrollable */
+    overflow-x: hidden; 
+    padding: 10px; 
+    border-radius: 5px;
+  }
+  
+  /* Hide scrollbar in Webkit browsers (Chrome, Edge, Safari) */
+  .scrollable-container::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar in other browsers */
+  .scrollable-container {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+  .announcement-section {
+    cursor: pointer;
+  }
+  
+  .cursor-pointer {
+    cursor: pointer;
+    text-decoration: underline;
+  }

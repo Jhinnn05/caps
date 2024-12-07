@@ -33,7 +33,7 @@ export class ReplyComponent implements OnInit{
   recipients: any[] = [];
 
   msgForm = new FormGroup({
-    message_sender: new FormControl(localStorage.getItem('admin_id')),
+    message_sender: new FormControl(localStorage.getItem('id')),
     message_reciever: new FormControl(''),
     message: new FormControl('')
   })
@@ -78,31 +78,32 @@ export class ReplyComponent implements OnInit{
     onNoClick(){
       this.dialogRef.close(); 
     }
-    submit(): void {
-      if (this.msgForm.valid) {
-        const messageData = {
-          message_sender: this.msgForm.value.message_sender,
-          message_reciever: this.msgForm.value.message_reciever,
-          message: this.msgForm.value.message,
-          message_date: new Date().toISOString().split('T')[0], // Get current date in 'YYYY-MM-DD' format
-        };
-    
-        // Make HTTP POST request to send the message
-        this.recipientService.composeMessage(messageData).subscribe({
-          next: (response) => {
-            console.log('Message sent successfully:', response);
-            // Close the dialog and pass the message back to SendComponent
-            this.dialogRef.close(messageData);
-            
-          },
-          error: (error) => {
-            console.error('Error sending message:', error);
-          }
-        });
-      } else {
-        console.error('Form is not valid');
+      submit(): void {
+        if (this.msgForm.valid) {
+          const messageData = {
+            message: this.msgForm.value.message,
+            message_date: new Date().toISOString().split('T')[0], // Ensure 'YYYY-MM-DD' format
+            message_sender: this.msgForm.value.message_sender, // Must match a valid guardian_id
+            message_reciever: this.msgForm.value.message_reciever, // Must match a valid admin_id
+          };
+      
+          console.log('Submitting message data:', messageData); // Debug the payload
+      
+          this.recipientService.composeMessage(messageData).subscribe({
+            next: (response) => {
+              console.log('Message sent successfully:', response);
+              this.dialogRef.close(messageData);
+            },
+            error: (error) => {
+              console.error('Error sending message:', error);
+              if (error.status === 422) {
+                console.error('Validation error details:', error.error.errors);
+              }
+            },
+          });
+        } else {
+          console.error('Form validation failed:', this.msgForm.value);
+        }
       }
-    }
-    
-
+      
 }

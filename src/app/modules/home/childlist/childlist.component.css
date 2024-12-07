@@ -95,53 +95,7 @@ body, html {
 }
 
 
-/* Announcement Styling */
-.announcement-section {
-  border: 1px solid #e0e0e0;
-  border-radius: 10px;
-  background-color: #f9f9f9;
-  padding: 20px;
-  margin-top: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: relative;
-}
 
-.announcement-title {
-  font-weight: 600;
-  font-size: 18px;
-  color: #333;
-}
-
-.announcement-text {
-  font-size: 16px;
-  color: #555;
-  line-height: 1.5;
-}
-
-.announcement-section:hover {
-  background-color: #f0f0f0;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.shadow-sm {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.announcement-date {
-  font-size: 14px;
-  color: #888;
-  font-style: italic;
-  margin-left: auto;
-  align-self: flex-start;
-}
-
-.scrollable-container {
-  max-height: 500px; 
-  overflow-y: auto; 
-  overflow-x: hidden; 
-  padding: 10px; 
-  border-radius: 5px; 
-}
 
 /* Hide scrollbar for WebKit browsers (Chrome, Safari, Opera) */
 .scrollable-container::-webkit-scrollbar {
