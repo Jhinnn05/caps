@@ -1,53 +1,95 @@
+<!-- Preloader -->
+
+
+<!-- Main content container -->
 <div class="container">
-    <h2 class="text-center">Student Grades</h2>
-    <hr style="border: 2px solid black; margin-bottom: 20px;" />
-  
+  <h4 class="text-center">Student Grades</h4>
+  <hr style="border: 2px solid black; margin-bottom: 20px;" />
+
+  <!-- Table for 1st Semester -->
+  <div *ngIf="hasSemester(1)">
+    <h5>1st Semester</h5>
     <table class="table table-bordered">
       <thead class="thead-light">
         <tr>
           <th>Subject</th>
-          <ng-container *ngIf="grades[0]?.grade_level >= 7 && grades[0]?.grade_level <= 10">
-            <th>1st Quarter</th>
-            <th>2nd Quarter</th>
-            <th>3rd Quarter</th>
-            <th>4th Quarter</th>
-          </ng-container>
-          <ng-container *ngIf="grades[0]?.grade_level < 7 || grades[0]?.grade_level > 10">
-            <th>Midterm </th>
-            <th>Final </th>
-          </ng-container>
+          <th>Midterm</th>
+          <th>Final</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let grade of grades">
-          <td>{{ grade.subject_name }}</td>
-          <ng-container *ngIf="grade.grade_level >= 7 && grade.grade_level <= 10">
+        <ng-container *ngFor="let grade of grades">
+          <tr *ngIf="grade.semester === 1">
+            <td>{{ grade.subject_name }}</td>
+            <td>{{ grade.Midterm }}</td>
+            <td>{{ calculateFinalGrade(grade) }}</td>
+          </tr>
+        </ng-container>
+        <tr>
+          <td colspan="2"><strong>General Average</strong></td>
+          <td><strong>{{ calculateGeneralAverage(1) }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Table for 2nd Semester -->
+  <div *ngIf="hasSemester(2)">
+    <h5>2nd Semester</h5>
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th>Subject</th>
+          <th>Midterm</th>
+          <th>Final</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let grade of grades">
+          <tr *ngIf="grade.semester === 2">
+            <td>{{ grade.subject_name }}</td>
+            <td>{{ grade.Midterm }}</td>
+            <td>{{ calculateFinalGrade(grade) }}</td>
+          </tr>
+        </ng-container>
+        <tr>
+          <td colspan="2"><strong>General Average</strong></td>
+          <td><strong>{{ calculateGeneralAverage(2) }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Table for Null Semester -->
+  <div *ngIf="hasNullSemester()">
+    <h5>Subjects</h5>
+    <table class="table table-bordered">
+      <thead class="thead-light">
+        <tr>
+          <th>Subject</th>
+          <th>1st Quarter</th>
+          <th>2nd Quarter</th>
+          <th>3rd Quarter</th>
+          <th>4th Quarter</th>
+          <th>Final</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let grade of grades">
+          <tr *ngIf="grade.semester === null">
+            <td>{{ grade.subject_name }}</td>
             <td>{{ grade.First_Quarter }}</td>
             <td>{{ grade.Second_Quarter }}</td>
             <td>{{ grade.Third_Quarter }}</td>
             <td>{{ grade.Fourth_Quarter }}</td>
-          </ng-container>
-          <ng-container *ngIf="grade.grade_level < 7 || grade.grade_level > 10">
-            <td>{{ grade.Midterm }}</td>
-            <td>{{ grade.Final }}</td>
-          </ng-container>
-        </tr>
-  
-        Average Grade Row
+            <td>{{ calculateFinalGrade(grade) }}</td>
+          </tr>
+        </ng-container>
         <tr>
-          <td><strong>Average Grade</strong></td>
-          <ng-container *ngIf="grades[0]?.grade_level >= 7 && grades[0]?.grade_level <= 10">
-            <td><strong>{{ calculateAverage('First_Quarter') | number:'1.0-2' }}</strong></td>
-            <td><strong>{{ calculateAverage('Second_Quarter') | number:'1.0-2' }}</strong></td>
-            <td><strong>{{ calculateAverage('Third_Quarter') | number:'1.0-2' }}</strong></td>
-            <td><strong>{{ calculateAverage('Fourth_Quarter') | number:'1.0-2' }}</strong></td>
-          </ng-container>
-          <ng-container *ngIf="grades[0]?.grade_level < 7 || grades[0]?.grade_level > 10">
-            <td colspan="2"><strong>Midterm: {{ calculateAverage('Midterm') | number:'1.0-2' }}</strong></td>
-            <td colspan="2"><strong>Final: {{ calculateAverage('Final') | number:'1.0-2' }}</strong></td>
-          </ng-container>
-        </tr> 
+          <td colspan="5"><strong>General Average</strong></td>
+          <td><strong>{{ calculateGeneralAverage(null) }}</strong></td>
+        </tr>
       </tbody>
     </table>
   </div>
-  
+</div>

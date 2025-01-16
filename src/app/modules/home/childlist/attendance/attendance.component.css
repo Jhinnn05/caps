@@ -51,16 +51,19 @@ thead th {
     background-color: #f2f2f2;
 }
 .no-border-button {
-  background: none; /* Remove background */
-  border: none;     /* Remove border */
-  color: inherit;   /* Use the text color of the parent element */
-  cursor: pointer;  /* Change cursor to pointer */
-  padding: 0;       /* Remove padding */
-  text-align: left; /* Align text to the left */
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 14px;
 }
 
-.no-border-button:hover {
-  text-decoration: underline; /* Optional: underline on hover for better indication */
+.no-border-button.selected-month {
+  text-decoration: underline; /* Retain the underline */
+  font-weight: bold; /* Optional: Make it more distinct */
+  background-color: lightblue; /* Light background color for selection */
+  border-radius: 4px; /* Optional: Slightly round the edges of the background */
+  padding: 5px 10px; /* Ensure the padding aligns with the background */
 }
 
 .calendar {
@@ -106,45 +109,26 @@ thead th {
   align-items: center; /* Optional: helps vertically align the text */  
 }  
 
-.no-record-container {  
-  display: flex;  
-  align-items: center; /* Centers text vertically with the color box */  
-  background-color: gray;  
-  color: black;  
-  width: 20px; /* Add width for visibility */  
-  height: 20px; /* Add height for visibility */
-  border-radius: 50%;  
-}  
-
-.late-container {  
-  display: flex;  
-  align-items: center; /* Centers text vertically with the color box */   
-  background-color: yellow;  
-  color: black;  
-  width: 20px; /* Add width for visibility */  
-  height: 20px; /* Add height for visibility */
-  border-radius: 50%;  
-}  
-
-.absent-container {  
-  display: flex;  
-  align-items: center; /* Centers text vertically with the color box */  
-  background-color: red;  
-  color: black;  
-  width: 20px; /* Add width for visibility */  
-  height: 20px; /* Add height for visibility */ 
-  border-radius: 50%; 
-}  
-
-.present-container {  
-  display: flex;  
-  align-items: center; /* Centers text vertically with the color box */  
-  background-color: green;  
-  color: black;  
-  width: 20px; /* Add width for visibility */  
-  height: 20px; /* Add height for visibility */  
+.present-container {
+  background-color: #4caf50;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-} 
+}
+
+.late-container {
+  background-color: #ff9800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
+.absent-container {
+  background-color: #f44336;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
 
 .present {
   background-color: green;
@@ -164,4 +148,16 @@ thead th {
 .no-record {
   background-color: gray;
   color: black;
+}
+:host {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+.attendance-gradient {
+  color: #fff; /* Adjust as needed for readability */
+  text-align: center;
+  padding: 5px;
+  border-radius: 4px;
+  font-weight: bold;
 }

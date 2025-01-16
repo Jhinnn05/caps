@@ -30,3 +30,12 @@
     opacity: 0;
     height: 0px !important;
 }
+:host {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+::ng-deep .mat-badge-content {
+    background-color: red !important;
+    color: white !important;
+  }

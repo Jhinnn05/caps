@@ -10,8 +10,6 @@
       <img src="aaa.png" alt="Illustration" class="img-fluid w-100">
     </div>
   </div>
-
-
   <div class="row messenger-container">
     <!-- Sidebar -->
     <div class="col-12 col-md-3 col-lg-2 p-0 sidebar">
@@ -33,20 +31,13 @@
         <div class="child-info">
           <h3>{{ selectedStudent.fname }} {{ selectedStudent.mname }} {{ selectedStudent.lname }}</h3>
           <p>LRN: {{ selectedStudent.LRN || 'N/A' }}</p>
-          <p>Section/Strand: 
-            {{ selectedStudent.section?.section_name }} 
-            {{ selectedStudent.section?.strand }}
-            <!-- Conditionally add hyphen if grade_level is not 11 or 12 -->
-            {{ (selectedStudent.grade_level !== '11' && selectedStudent.grade_level !== '12') ? '-' : '' }}
+          <p>
+            Section/Strand: 
+            {{ selectedStudent.section?.strand !== '-' ? selectedStudent.section?.strand : '' }}
+            {{ selectedStudent.section?.section_name }}
           </p>
           
-          <p>Grade Level: {{ selectedStudent.section?.grade_level || 'N/A' }}</p>
-        </div>
-      </div>
-
-      <div *ngIf="preloader" class="preloader-container">
-        <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <p>Grade Level: {{ selectedStudent.section?.grade_level }}</p>
         </div>
       </div>
 
@@ -79,8 +70,6 @@
           </li>
         </ul>
       </nav>
-      
-
       <!-- Content for each section -->
       <div class="content-section">
         <router-outlet></router-outlet>

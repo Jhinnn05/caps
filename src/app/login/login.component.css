@@ -37,3 +37,8 @@
     background-attachment: fixed; 
     height: 100vh; 
 }  */
+:host {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}

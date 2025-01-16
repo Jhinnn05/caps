@@ -26,3 +26,25 @@ td strong {
     font-weight: bold;
     font-size: 1.1em; /* Emphasize the average grade */
 }
+
+/* Align subject name to the left */
+td:first-child {
+    text-align: left;
+}
+:host {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+.preloader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+  }

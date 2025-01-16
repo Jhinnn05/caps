@@ -71,6 +71,14 @@ export class SendComponent implements OnInit{
     }
   }
 
+  markAsRead(sid: any){
+    this.auth.markAsRead(sid).subscribe((result: any) => {
+      console.log('Messages marked as read:', result.updated_count);
+    })
+
+    this.getMessages()
+  }
+
 getMessages(){
     console.log(this.uid)
     this.auth.getMessages(this.uid).subscribe((result: any) => {

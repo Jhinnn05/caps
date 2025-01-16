@@ -1,6 +1,6 @@
 <div *ngIf="filename; else loading" class=" container justify-content-center">
     <!-- Apply custom class to the image -->
-    <img class="responsive-image" [src]="'http://localhost:8000/assets/' + filename" alt="Financial Statement"/>
+    <img class="responsive-image" [src]="'http://localhost:8000/assets/' + filename" [alt]="filename || 'Default Alt Text'"/>
   </div>
   
   <ng-template #loading>

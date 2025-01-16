@@ -12,6 +12,7 @@ import { CommonModule } from '@angular/common';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatBadgeModule } from '@angular/material/badge';
 import { AuthService } from '../auth.service';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-mainpage',
@@ -48,16 +49,13 @@ export class MainpageComponent implements OnInit{
   onLogout() {
     this.authService.logout().subscribe(
         (response) => {
-          console.log('Logout successful:', response);
-          localStorage.removeItem('token');
-          localStorage.removeItem('user'); 
-          localStorage.removeItem('admin_id');// Clear the token from localStorage
-          this.router.navigate(['/login']);
+            console.log('Logout successful:', response);
+            localStorage.clear();
+            this.router.navigate(['login']);
         },
         (error) => {
-            console.error('Logout failed', error); // Handle error
+            console.error('Logout failed', error);
         }
     );
 }
-
 }

@@ -2,7 +2,7 @@
     <img [width]="profilePicSize()" [height]="profilePicSize()" [src]="adminPic" class="prof-image" alt="Admin Profile Picture"> 
     <img />
     <div class="header-text" [class.hide-header-text]="sideNavCollapsed()">
-        <h2>Parent</h2>
+        <h2>Parent/Guardian</h2>
         {{fname}} {{mname}} {{lname}}
     </div>
 </div>
@@ -12,8 +12,11 @@
         [routerLink]="item.route"
         routerLinkActive="" #rla="routerLinkActive" [activated]="rla.isActive"
     >
-    <!-- matTooltip="{{item().label}}" -->
-        <mat-icon matListItemIcon >{{item.icon}}</mat-icon>
+    <!-- matTooltip="{{item.label}}" -->
+        <!-- <mat-icon matListItemIcon >{{item.icon}}</mat-icon> -->
+        <mat-icon matListItemIcon [matBadge]="item.unreadCount > 0 ? item.unreadCount : null" matBadgeColor="warn">
+            {{ item.icon }}
+          </mat-icon>
         <span matListItemTitle *ngIf="!sideNavCollapsed()">{{item.label}}</span>
     </a>
 </mat-nav-list>

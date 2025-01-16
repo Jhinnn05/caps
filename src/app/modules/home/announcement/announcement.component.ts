@@ -3,6 +3,17 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../../auth.service';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogComponent } from './dialog/dialog.component';
+
+
+export interface Announcement {
+  admin_name: string;     // Name of the admin who made the announcement
+  created_at: string;     // Date when the announcement was created
+  subject_name: string;    // Subject associated with the announcement
+  title: string;          // Title of the announcement
+  announcement: string;   // The content of the announcement
+}
 
 @Component({
   selector: 'app-announcement',
@@ -15,7 +26,7 @@ export class AnnouncementComponent implements OnInit {
   
   @Input() announcements: any[] = [];
 
-  constructor(public authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router, public dialog: MatDialog ){}
 
   ngOnInit(): void {
     this.fetchAnnouncements();
@@ -24,21 +35,26 @@ export class AnnouncementComponent implements OnInit {
     return item.id; // Use a unique identifier for announcements
   }
   //fetch Announcements
-  fetchAnnouncements(){
+  fetchAnnouncements() {
     this.authService.getannouncement().subscribe((data) => {
       this.announcements = data;
       console.log(this.announcements); 
     });
-  } 
+  }
+
   showFullAnnouncement(ann: any): void {
-    Swal.fire({
-      title: ann.title,
-      text: ann.announcement,
-      icon: 'info',
-      confirmButtonText: 'Close',
-      customClass: {
-        popup: 'swal-wide' // Optional: custom class for styling
+    const dialogRef = this.dialog.open(DialogComponent, {
+      data: {
+        title: ann.title,
+        announcement: ann.announcement,
+        admin_name: ann.admin_name,        // Include admin_name
+        created_at: ann.created_at,        // Include created_at
+        subject_name: ann.subject_name     // Include subject_name
       }
     });
-  }
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }  
 }

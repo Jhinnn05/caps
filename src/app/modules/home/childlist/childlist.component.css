@@ -1,3 +1,9 @@
+:host {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
 .container {
   padding-left: 0; 
   border-radius: 20px;
@@ -16,14 +22,13 @@ body, html {
 
 .messenger-container {
   display: flex;
-
+  flex-wrap: wrap; /* Allow wrapping for responsive layouts */
 }
 
 .sidebar {
   flex: 0 0 370px;
-  padding-left: 0; 
-  /* margin-top: 0%; */
-
+  max-width: 370px;
+  padding-left: 0;
 }
 
 .main-content {
@@ -31,9 +36,10 @@ body, html {
   display: flex;
   flex-direction: column;
   background-color: white;
-  padding-left: 0; 
+  padding-left: 0;
   border-radius: 20px;
-  
+  overflow: hidden; /* Prevent content overflow */
+  min-width: 0; /* Ensures the main content resizes properly */
 }
 
 .chat-header {
@@ -56,7 +62,6 @@ body, html {
   cursor: pointer;
 }
 
-/* General styling for navbar links */
 .navlink {
   text-decoration: none;
   color: black;
@@ -64,45 +69,35 @@ body, html {
   padding: 8px 16px;
   display: inline-block;
   transition: background-color 0.3s ease, color 0.3s ease;
-  border-radius: 4px; /* Optional: To round the corners of the buttons */
+  border-radius: 4px;
 }
 
-/* Hover effect: change background color to light gray */
 .navlink:hover {
   background-color: lightgray;
 }
 
-/* Active link: change background color to light blue */
 .navlink.active {
   background-color: lightblue;
-  color: rgb(0, 0, 0); /* Optionally change text color when active */
+  color: rgb(0, 0, 0);
 }
 
-/* Optional: Customize the icon color when hovered or active */
 .navlink i {
   margin-right: 8px;
   transition: color 0.3s ease;
 }
 
-/* Change icon color on hover */
 .navlink:hover i {
   color: gray;
 }
 
-/* Keep the icon color consistent when active */
 .navlink.active i {
   color: white;
 }
 
-
-
-
-/* Hide scrollbar for WebKit browsers (Chrome, Safari, Opera) */
 .scrollable-container::-webkit-scrollbar {
   display: none; 
 }
 
-/* Hide scrollbar for Firefox */
 .scrollable-container {
   scrollbar-width: none; 
 }
@@ -186,6 +181,7 @@ body, html {
 .text-content {
   max-width: 70%;
 }
+
 .preloader-container {
   position: fixed;
   top: 0;
@@ -197,4 +193,52 @@ body, html {
   justify-content: center;
   align-items: center;
   z-index: 9999;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .sidebar {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .main-content {
+    flex: 1 0 100%;
+    max-width: 100%;
+  }
+
+  .banner {
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+  }
+
+  .illustration img {
+    max-width: 100%;
+    margin-left: 0;
+  }
+
+  .welcome-message {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-header, .navbar-container ul {
+    font-size: 14px;
+  }
+
+  .main-content {
+    padding: 10px;
+  }
+
+  .banner {
+    gap: 5px;
+    padding: 10px;
+  }
+
+  .welcome-message {
+    font-size: 30px;
+  }
 }

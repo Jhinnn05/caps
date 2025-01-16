@@ -126,9 +126,6 @@ export class ChildlistComponent implements OnInit {
       console.warn('Selected student does not have a valid LRN.');
     }
   }
-
-  
-
   // Navigation methods
   navigateToFinance() {
     this.activeLink = 'finance';

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable,BehaviorSubject } from 'rxjs';
 
@@ -6,6 +6,9 @@ import { Observable,BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token'); // Check if token exists in local storage
+  }
   private apiUrl = 'http://localhost:8000/api'; //Laravel backend URL
   id = localStorage.getItem('id');
   token = localStorage.getItem('token'); // Retrieve the token dynamically
@@ -27,7 +30,7 @@ export class AuthService {
     return this.http.post(this.apiUrl + '/login', data);
   }
   logout(): Observable<any> {
-    const headers = {'Authorization': 'Bearer ' + this.token};
+    const headers = { 'Authorization': 'Bearer ' + (this.token || localStorage.getItem('token')) };
     console.log('token:', headers);
     return this.http.post(this.apiUrl + '/logout', {}, { headers }); // Pass headers in the request
   }
@@ -82,6 +85,15 @@ export class AuthService {
   composeMessage(messageData: any): Observable<any> {
     return this.http.post(this.apiUrl + '/composemessage', messageData);
   }
+
+  markAsRead(sid: any){
+    return this.http.post(this.apiUrl + '/markAsRead', {sid});
+  }
+
+  getUnreadMessagesCount(uid: any) {
+    const params = new HttpParams().set('uid', uid);
+    return this.http.get(this.apiUrl + '/getUnreadCount', {params});
+}
 
   //announcements
   getannouncement(): Observable<any[]> {

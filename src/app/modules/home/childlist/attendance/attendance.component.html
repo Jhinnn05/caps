@@ -6,9 +6,10 @@
         <tr>
           <th>Months</th>
           <th *ngFor="let month of months">
-            <button 
-              class="no-border-button" 
-              (click)="onMonthClick(month)" 
+            <button
+              class="no-border-button"
+              (click)="onMonthClick(month)"
+              [ngClass]="{'selected-month': month === selectedMonth}"
               [attr.aria-label]="'View ' + month.viewValue + ' attendance'">
               {{ month.viewValue }}
             </button>
@@ -24,8 +25,10 @@
         </tr>
         <tr>
           <td>Days Present</td>
-          <td *ngFor="let month of months">{{ getAttendanceForMonth(month.value) }}</td>
-          <td>{{ getTotalDaysPresent() }}</td>
+          <td *ngFor="let month of months">
+            {{ attendanceByMonth[month.viewValue] || 0 }}
+          </td>
+          <td>{{ totalDaysPresent }}</td> <!-- Display total attendance -->
         </tr>
       </tbody>
     </table>
@@ -33,12 +36,12 @@
 </div>
 
 <div class="container">
-  <blockquote 
-    class="blockquote mb-4 d-flex gap-3" 
+  <blockquote
+    class="blockquote mb-4 d-flex gap-3"
     style="border-bottom: 2px solid black;">
     <!-- Optional: Add additional information or notes here -->
   </blockquote>
-  
+
   <div class="row">
     <div class="col-12">
       <mat-card class="attendance-card">
@@ -46,16 +49,13 @@
           <span>Legend:</span>
           <div class="status-container d-flex flex-wrap gap-3 align-items-center">
             <div class="legend-item">
-              <div class="no-record-container"></div><span>No Record</span>
+              <div class="present-container"></div><span>Present</span>
             </div>
             <div class="legend-item">
               <div class="late-container"></div><span>Late</span>
             </div>
             <div class="legend-item">
               <div class="absent-container"></div><span>Absent</span>
-            </div>
-            <div class="legend-item">
-              <div class="present-container"></div><span>Present</span>
             </div>
           </div>
         </mat-card-header>
@@ -67,14 +67,17 @@
               </div>
             </div>
             <div class="calendar-body">
-              <div *ngFor="let dateinfo of calendarDates" 
-                   [ngClass]="getAttendanceClass(dateinfo.status)" 
-                   class="calendar-cell" 
+              <div *ngFor="let dateinfo of calendarDates"
+                   [ngClass]="getAttendanceClass(dateinfo.status)"
+                   class="calendar-cell"
                    (click)="handleDateClick(dateinfo.date)">
                 <div class="date">{{ dateinfo.date | date: 'd' }}</div>
                 <p>{{ dateinfo.status }}</p>
+                <p *ngIf="['present', 'absent', 'late'].includes(dateinfo.status)">
+                  See more...
+                </p>
               </div>
-            </div>      
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
