@@ -67,16 +67,15 @@
               </div>
             </div>
             <div class="calendar-body">
-              <div *ngFor="let dateinfo of calendarDates"
-                   [ngClass]="getAttendanceClass(dateinfo.status)"
-                   class="calendar-cell"
-                   (click)="handleDateClick(dateinfo.date)">
-                <div class="date">{{ dateinfo.date | date: 'd' }}</div>
-                <p>{{ dateinfo.status }}</p>
-                <p *ngIf="['present', 'absent', 'late'].includes(dateinfo.status)">
-                  See more...
-                </p>
-              </div>
+              <div
+              *ngFor="let dateInfo of calendarDates"
+              [ngClass]="['calendar-cell', getAttendanceClass(dateInfo.status)]"
+              [ngStyle]="{ 'background': getGradientStyle(dateInfo.date) }"
+              (click)="handleDateClick(dateInfo.date)"
+              [title]="getTooltipForDate(dateInfo.date)"
+            >
+              {{ dateInfo.date.getDate() }}
+            </div>
             </div>
           </div>
         </mat-card-content>

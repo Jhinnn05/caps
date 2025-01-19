@@ -195,11 +195,58 @@ export class AttendanceComponent implements OnInit{
   }
 
   getAttendanceClass(status: string): string {
-    return { present: 'present', absent: 'absent', late: 'late' }[status] || '';
+    return {
+      present: 'present',
+      absent: 'absent',
+      late: 'late',
+      'No Record': 'no-record',
+    }[status] || '';
   }
-
   onMonthClick(month: { value: Date; viewValue: string }): void {
     this.selectedMonth = month;
     this.updateCalendar();
   }
+  getGradientStyle(date: Date): string {
+    const recordsForDate = this.attendanceRecords.filter(
+      (record) => record.date.toDateString() === date.toDateString()
+    );
+  
+    if (recordsForDate.length === 0) {
+      return 'linear-gradient(90deg, #cfd8dc, #eceff1)'; // Default gray for no records
+    }
+  
+    const totalRecords = recordsForDate.length;
+    const counts = {
+      present: recordsForDate.filter((record) => record.attendance_status === 'present').length,
+      absent: recordsForDate.filter((record) => record.attendance_status === 'absent').length,
+      late: recordsForDate.filter((record) => record.attendance_status === 'late').length,
+    };
+  
+    const presentPercentage = (counts.present / totalRecords) * 100;
+    const absentPercentage = (counts.absent / totalRecords) * 100;
+    const latePercentage = (counts.late / totalRecords) * 100;
+  
+    return `linear-gradient(90deg, 
+      #4caf50 ${presentPercentage}%, 
+      #f44336 ${presentPercentage}% ${presentPercentage + absentPercentage}%, 
+      #ff9800 ${presentPercentage + absentPercentage}% ${presentPercentage + absentPercentage + latePercentage}%)`;
+  }
+  getTooltipForDate(date: Date): string {
+    const recordsForDate = this.attendanceRecords.filter(
+      (record) => record.date.toDateString() === date.toDateString()
+    );
+  
+    if (recordsForDate.length === 0) {
+      return 'No attendance records';
+    }
+  
+    const counts = {
+      present: recordsForDate.filter((record) => record.attendance_status === 'present').length,
+      absent: recordsForDate.filter((record) => record.attendance_status === 'absent').length,
+      late: recordsForDate.filter((record) => record.attendance_status === 'late').length,
+    };
+  
+    return `Present: ${counts.present}, Absent: ${counts.absent}, Late: ${counts.late}`;
+  }
+  
 }
